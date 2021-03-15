@@ -1,0 +1,22 @@
+{
+  "name": "oslite",
+  "version": "1.0.0",
+  "description": "sistema de OS com electron js",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3"
+  },
+  "keywords": [],
+  "author": "Thiago Britto",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^12.0.1",
+    "knex": "^0.95.1",
+    "materialize-css": "^1.0.0-rc.2",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^2.3.5"
+  }
+}
