@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    
+    <!--Import Google Icon Font-->
+    <link type="text/css" rel="stylesheet" href="dist/materialize/css/font-materialize.css">
+    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="dist/materialize/css/materialize.min.css"  media="screen,projection"/>
+	
+	<!-- My Style -->
+    <link rel="stylesheet" type="text/css" href="css/resetCss.css">
+    <link rel="stylesheet" type="text/css" href="css/loginView.css">
+</head>
+<body>
+	<div class="row">
+		<form name="login" class="card-panel">
+			<h5 class="center-align">OSLite</h5>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="user" name="user" type="text" class="validate">
+					<label for="user">Usuário</label>
+				</div>			
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="pass" name="pass" type="password" class="validate">
+					<label for="pass">Senha</label>
+				</div>			
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<button id="btn_en" class="btn waves-effect waves-light right" type="submit" name="action">Login
+						<i class="tiny material-icons right">arrow_forward</i>
+					</button>
+				</div>	
+			</div>
+		</form>
+	</div>
+    
+	<!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="dist/materialize/js/materialize.min.js"></script>
+	
+	<!--My Scripts-->
+    <script type="text/javascript" src="js/loginRender.js"></script>
+
+</body>
+</html>

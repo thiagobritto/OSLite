@@ -1,17 +1,12 @@
-const { app, BrowserWindow, ipcMain, Menu, Tray } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
-const knex = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    filename: "./oslite.db"
-  },
-  useNullAsDefault: true
-});
+// connection db
+const { Connection } = require('./src/DAO/Connection.js')
+const conn = new Connection
 
-//Menu.setApplicationMenu(false);
-
-let win, winLogin, tray;
+// elemens electron js
+let win, winLogin, userLogin;
 
 function createWindow () {
   //tray = new Tray('/path/to/my/icon')
@@ -41,18 +36,12 @@ function createWinLogin () {
       preload: path.join(__dirname, 'src/controller/loginController.js')
     }
   })
-  winLogin.loadURL(`file://${__dirname}/src/view/index.html`)
+  winLogin.loadURL(`file://${__dirname}/src/view/login.html`)
   winLogin.once("ready-to-show", () => { winLogin.show() })
 }
 
 app.whenReady().then(() => {
   createWinLogin()
-  
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWinLogin()
-  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -71,13 +60,17 @@ ipcMain.handle('login', async (event, args) => {
 })
 
 function selectUser( obj ) {
-  let user = knex.select("id","name","status").table('user').where({"name": obj.name, "pass": obj.pass});
+  let user = conn.select("id","name","status").table('user').where({"name": obj.name, "pass": obj.pass});
   return user
 }
 
-let userLogin;
 ipcMain.handle('logar',  (event, args) => {
   userLogin = args
   createWindow()
+  app.on('activate', function () {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
   winLogin.close()
 })
