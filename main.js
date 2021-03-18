@@ -2,8 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 // connection db
-const { Connection } = require('./src/DAO/Connection.js')
-const conn = new Connection
+const { connection } = require('./src/DAO')
+const conn = connection()
 
 // elemens electron js
 let win, winLogin, userLogin;
