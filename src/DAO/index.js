@@ -2,16 +2,16 @@ const knex = require('knex')
 
 let conn;
 
-function connection() {
-  conn = conn ? conn : connect();
+function connection(db) {
+  conn = conn ? conn : connect(db);
   return conn
 }
 
-function connect() {
+function connect(db) { 
   conn = knex({
     client: 'sqlite3',
     connection: {
-        filename: "./oslite.db"
+        filename: `./src/databases/${db?db:'oslite'}.db`
     },
     useNullAsDefault: true
   })
