@@ -1,5 +1,11 @@
 const { ipcRenderer } = require('electron')
+//const { connection } = require('../DAO')
+//const conn = connection()
+//console.log(conn);
+
 require('../view/dist/materialize/js/materialize.min.js')
+
+// code
 
 document.addEventListener("DOMContentLoaded", () => {
 
