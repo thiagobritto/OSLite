@@ -1,11 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
-// connection db
-const { connection } = require('./src/DAO')
-const conn = connection()
-
-// elemens electron js
 let win;
 function createWindow () {
   //tray = new Tray('/path/to/my/icon')
@@ -79,19 +74,9 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-ipcMain.handle('login', async (event, args) => {
-  const result = await selectUser(args)
-  return result
-})
-
-function selectUser( obj ) {
-  let user = conn.select("id","name","status").table('user').where({"name": obj.name, "pass": obj.pass});
-  return user
-}
+// ipcMain.handle('login', async (event, args) => {})
 
 let userLogin;
 ipcMain.handle('logar',  (event, args) => {
