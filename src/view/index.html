@@ -18,7 +18,7 @@
 
 <body>
 
-    <ul id="slide-out" class="sidenav sidenav-fixed">
+    <ul id="slide-out" class="sidenav sidenav-fixed cyan lighten-5">
         <li>
             <div class="user-view">
                 <div class="background">
@@ -31,16 +31,44 @@
                 <a href="#email"><span class="white-text email">support@oslite.com</span></a>
             </div>
         </li>
-        <li><a class="waves-effect" href="#!">Nova OS</a></li>
-        <li><a href="#!">Novo clientes</a></li>
-        <li><a class="subheader">Relatorios</a></li>
+        <!-- Dropdown cadastro -->
+        <li>
+            <a class="waves-effect dropdown-trigger" data-target='cadastrar'>Cadastro</a>
+        </li>
+        <li>
+            <!-- Dropdown Structure -->
+            <ul id='cadastrar' class='dropdown-content'>
+                <li><a class="waves-effect" href="#!">Nova OS</a></li>
+                <li><a class="waves-effect" href="#!">Novo Cliente</a></li>
+                <li><a class="waves-effect subheader" href="#!">Novo Usuário</a></li>
+                
+                <li class="divider" tabindex="-1"></li>
+                
+            </ul>
+        </li>
+        <!-- Dropdown Relatorios -->
+        <li>
+            <a class="waves-effect dropdown-trigger" data-target='relatorios'>Relatórios</a>
+        </li>
+        <li>
+            <!-- Dropdown Structure -->
+            <ul id='relatorios' class='dropdown-content'>
+                <li><a class="waves-effect" href="#!">OSs</a></li>
+                <li><a class="waves-effect" href="#!">Cliente</a></li>
+                <li><a class="waves-effect subheader" href="#!">Usuário</a></li>
+                
+                <li class="divider" tabindex="-1"></li>
+                
+            </ul>
+        </li>
+
         <li><a class="subheader">Usuários</a></li>
+        
         <li class="hide-on-large-only">
             <div class="divider"></div>
         </li>
-        <li class="hide-on-large-only"><a href="sass.html">Sass</a></li>
-        <li class="hide-on-large-only"><a href="badges.html">Components</a></li>
-        <li class="hide-on-large-only"><a href="collapsible.html">JavaScript</a></li>
+        <li class="hide-on-large-only"><a href="#!">Logout</a></li>
+        <li class="hide-on-large-only"><a href="#!">Sair</a></li>
     </ul>
 
     <header>
@@ -50,13 +78,13 @@
                 <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only"><i
                         class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
-                    <li><a href="collapsible.html">JavaScript</a></li>
+                    <li><a href="#!">Logout</a></li>
+                    <li><a href="#!">Sair</a></li>
                 </ul>
             </div>
         </nav>
     </header>
+
     <main>
 
     </main>
@@ -67,11 +95,18 @@
     <!--My Scripts-->
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems, {
+            let elemsNav = document.querySelectorAll('.sidenav')
+            let instancesNav = M.Sidenav.init(elemsNav, {
                 edge: 'left'
-            });
-        });
+            })
+
+            let elemsDrop = document.querySelectorAll('.dropdown-trigger')
+            let instancesDrop = M.Dropdown.init(elemsDrop, {
+                coverTrigger: false,
+                alignment: 'center',
+                autoTrigger: true    
+            })
+        })
     </script>
 
 </body>

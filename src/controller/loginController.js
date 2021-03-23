@@ -1,39 +1,22 @@
 const { ipcRenderer } = require('electron')
-const { connection } = require('../DAO')
-const conn = connection()
+const { connection  } = require('../DAO')
+const { UserDAO     } = require('../DAO/UserDAO')
+const userDAO = new UserDAO(connection())
 require('../view/dist/materialize/js/materialize.min')
 
 /* DEMOS */
-//console.log(conn);
 //ipcRenderer.invoke('login', objLogin).then((result) => {}).catch((err)=>{})
 
-function selectUser() {
-	let user = conn.select("id","name","status")
-		.table('user')
-		.where({
-			"name": login.user.value, 
-			"pass": login.user.value
-		});
-	return user
-}
-
-function verifyLogin(result) {
-	if (result.length > 0) {
-		ipcRenderer.invoke('logar', result[0])
-	} else {
-		var toastHTML = '<span>Usuário ou senha invalido!</span>';
-		M.toast({html: toastHTML});
-	}
-}
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("btn_en").onclick = (e) => {
+	document.getElementById("btn_en").onclick = async e => {
 		e.preventDefault();	// se não resolver -> e.stopPropagation();
-		selectUser().then((result) => {
-			verifyLogin(result)
-		}).catch((err) => {
-			console.log(err);
-		})
+		try {
+			const stmt = await userDAO.checkInUser(login.user.value, login.pass.value)
+			const user = await userDAO.verifyLogin(stmt)
+			ipcRenderer.invoke('logar', user)
+		} catch (error) {
+			let toastHTML = `<span>${error}</span>`
+			M.toast({ html: toastHTML })
+		}
 	}
 });
