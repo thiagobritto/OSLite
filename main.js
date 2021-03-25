@@ -7,15 +7,13 @@ const path = require('path')
 
 let win;
 function createWindow() {
-  //tray = new Tray('/path/to/my/icon')
   win = new BrowserWindow({
     width: 800,
     height: 600,
     title: 'OSLite',
-    titleBarStyle: 'hidden',
     autoHideMenuBar: true, /* remover em produção */
     webPreferences: {
-      //devTools: false, /* ativar em produção */
+      devTools: true, // mudar para false
       preload: path.join(__dirname, 'src/controller/indexController.js')
     }
   })
@@ -30,41 +28,39 @@ function createWinLogin() {
   winLogin = new BrowserWindow({
     width: 500,
     height: 500,
-    parent: win,
     resizable: false,
     maximizable: false,
     title: 'OSLite',
-    titleBarStyle: 'hidden',
-    autoHideMenuBar: true, /* remover em produção */
     center: true,
     webPreferences: {
-      //devTools: false, /* ativar em produção */
+      devTools: false,
       preload: path.join(__dirname, 'src/controller/loginController.js')
     }
   })
   winLogin.loadURL(`file://${__dirname}/src/view/login.html`)
-  //winLogin.menuBarVisible = falsec/* ativar em produção */
+  winLogin.menuBarVisible = false
   winLogin.once("ready-to-show", () => { winLogin.show() })
 }
 
 let winChild;
-function createWinChild() {
+function createWinChild(child) {
   winChild = new BrowserWindow({
     width: 800,
     height: 600,
     parent: win,
+    modal: true,
+    show: false,
     title: 'OSLite',
-    titleBarStyle: 'hidden',
     autoHideMenuBar: true, /* remover em produção */
     webPreferences: {
       //devTools: false, /* ativa em produção */
-      preload: path.join(__dirname, 'src/controller/mainController.js')
+      preload: path.join(__dirname, `src/controller/${child.controller}.js`)
     }
   })
-  winChild.loadURL(`file://${__dirname}/src/view/index.html`)
+  winChild.loadURL(`file://${__dirname}/src/view/${child.view}.html`)
   //winChild.menuBarVisible = false /* ativar em produção */
   //winChild.maximize() /* ativar em produção */
-  winChild.once("ready-to-show", () => { win.show() })
+  winChild.once("ready-to-show", () => { winChild.show() })
 }
 
 app.whenReady().then(() => {
@@ -92,4 +88,12 @@ ipcMain.handle('logar', (event, args) => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
   winLogin.close()
+})
+
+ipcMain.handle('user', (event, args) => {
+   return userLogin
+})
+
+ipcMain.handle('child', (event, args) => {
+  createWinChild(args)
 })

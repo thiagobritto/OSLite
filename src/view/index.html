@@ -22,13 +22,11 @@
         <li>
             <div class="user-view">
                 <div class="background">
-                    <img
-                        src="https://img.freepik.com/free-photo/room-with-concrete-floor-smoke-background_9083-2991.jpg?size=626&ext=jpg">
+                    <img src="./img/demo-background.jpg">
                 </div>
-                <a href="#user"><img class="circle"
-                        src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"></a>
-                <a href="#name"><span class="white-text name">Admin</span></a>
-                <a href="#email"><span class="white-text email">support@oslite.com</span></a>
+                <a href="#user"><img class="circle" src="./img/demo-user-0.png"></a>
+                <a href="#name"><span id="user_name" class="white-text name"></span></a>
+                <a href="#email"><span id="user_email" class="white-text email"></span></a>
             </div>
         </li>
         <!-- Dropdown cadastro -->
@@ -38,12 +36,12 @@
         <li>
             <!-- Dropdown Structure -->
             <ul id='cadastrar' class='dropdown-content'>
-                <li><a class="waves-effect" href="#!">Nova OS</a></li>
-                <li><a class="waves-effect" href="#!">Novo Cliente</a></li>
-                <li><a class="waves-effect subheader" href="#!">Novo Usuário</a></li>
-                
+                <li><a id="btn_cad_os" class="waves-effect" href="#!">Nova OS</a></li>
+                <li><a id="btn_cad_cliente" class="waves-effect" href="#!">Novo Cliente</a></li>
+                <li><a id="btn_cad_user" class="waves-effect subheader" href="#!">Novo Usuário</a></li>
+
                 <li class="divider" tabindex="-1"></li>
-                
+
             </ul>
         </li>
         <!-- Dropdown Relatorios -->
@@ -56,14 +54,14 @@
                 <li><a class="waves-effect" href="#!">OSs</a></li>
                 <li><a class="waves-effect" href="#!">Cliente</a></li>
                 <li><a class="waves-effect subheader" href="#!">Usuário</a></li>
-                
+
                 <li class="divider" tabindex="-1"></li>
-                
+
             </ul>
         </li>
 
         <li><a class="subheader">Usuários</a></li>
-        
+
         <li class="hide-on-large-only">
             <div class="divider"></div>
         </li>
@@ -86,7 +84,37 @@
     </header>
 
     <main>
+        <table class="striped highlight">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Serviço</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
 
+            <tbody>
+                <tr>
+                    <td>20/03/2021</td>
+                    <td>Manoel</td>
+                    <td>Trova da fonte</td>
+                    <td>R$ 58,87</td>
+                </tr>
+                <tr>
+                    <td>01/01/2021</td>
+                    <td>Luiz carlos</td>
+                    <td>formatação do pc</td>
+                    <td>R$ 30,76</td>
+                </tr>
+                <tr>
+                    <td>Jonathan</td>
+                    <td>Jonathan</td>
+                    <td>Lollipop</td>
+                    <td>$7.00</td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
     <!--JavaScript at end of body for optimized loading-->
@@ -104,7 +132,7 @@
             let instancesDrop = M.Dropdown.init(elemsDrop, {
                 coverTrigger: false,
                 alignment: 'center',
-                autoTrigger: true    
+                autoTrigger: true
             })
         })
     </script>

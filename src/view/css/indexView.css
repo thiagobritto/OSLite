@@ -12,3 +12,13 @@ header, main, footer {
     padding-left: 10px;
     padding-right: 10px;
   }
+
+  main {
+    padding-top: 80px; 
+  }
+
+  table {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }

@@ -8,7 +8,7 @@ require('../view/dist/materialize/js/materialize.min')
 //ipcRenderer.invoke('login', objLogin).then((result) => {}).catch((err)=>{})
 
 document.addEventListener("DOMContentLoaded", () => {
-	document.getElementById("btn_en").onclick = async e => {
+	document.getElementById("btn_login").onclick = async e => {
 		e.preventDefault();	// se não resolver -> e.stopPropagation();
 		try {
 			const stmt = await userDAO.checkInUser(login.user.value, login.pass.value)
