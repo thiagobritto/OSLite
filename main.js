@@ -33,12 +33,12 @@ function createWinLogin() {
     title: 'OSLite',
     center: true,
     webPreferences: {
-      devTools: false,
+      //devTools: false,
       preload: path.join(__dirname, 'src/controller/loginController.js')
     }
   })
   winLogin.loadURL(`file://${__dirname}/src/view/login.html`)
-  winLogin.menuBarVisible = false
+  //winLogin.menuBarVisible = false
   winLogin.once("ready-to-show", () => { winLogin.show() })
 }
 

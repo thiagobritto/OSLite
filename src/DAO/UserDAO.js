@@ -24,4 +24,8 @@ class UserDAO {
 
 }
 
-module.exports = { UserDAO } 
+function user (conn) {
+	return new UserDAO(conn)
+}
+
+module.exports = { user, UserDAO } 

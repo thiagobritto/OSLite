@@ -1,7 +1,8 @@
 const { ipcRenderer } = require('electron')
 const { connection  } = require('../DAO')
-const { UserDAO     } = require('../DAO/UserDAO')
-const userDAO = new UserDAO(connection())
+const { user        } = require('../DAO/UserDAO')
+
+const userDAO = user(connection())
 require('../view/dist/materialize/js/materialize.min')
 
 /* DEMOS */
