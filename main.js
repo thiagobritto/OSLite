@@ -1,99 +1,47 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain
-} = require('electron')
+// Modules to control application life and create native browser window
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+const { settingWindow } = require('./src/windows/_dists/settings/js/settingWindow')
 
-let win;
-function createWindow() {
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    title: 'OSLite',
-    autoHideMenuBar: true, /* remover em produção */
+let mainWindow = {}
+
+function createWindow (settingWindow) {
+  mainWindow[settingWindow.window] = new BrowserWindow({
+    width: settingWindow.width,
+    height: settingWindow.height,
+    title: settingWindow.title,
+    autoHideMenuBar: settingWindow.autoHideMenuBar,
     webPreferences: {
-      devTools: true, // mudar para false
-      preload: path.join(__dirname, 'src/controller/indexController.js')
+      preload: path.join(__dirname, `src/windows/${settingWindow.window}/preload.js`)
     }
   })
-  win.loadURL(`file://${__dirname}/src/view/index.html`)
-  //win.menuBarVisible = false /* ativar em produção */
-  win.maximize()
-  win.once("ready-to-show", () => { win.show() })
-}
 
-let winLogin;
-function createWinLogin() {
-  winLogin = new BrowserWindow({
-    width: 500,
-    height: 500,
-    resizable: false,
-    maximizable: false,
-    title: 'OSLite',
-    center: true,
-    webPreferences: {
-      //devTools: false,
-      preload: path.join(__dirname, 'src/controller/loginController.js')
-    }
-  })
-  winLogin.loadURL(`file://${__dirname}/src/view/login.html`)
-  //winLogin.menuBarVisible = false
-  winLogin.once("ready-to-show", () => { winLogin.show() })
-}
-
-let winChild;
-function createWinChild(child) {
-  winChild = new BrowserWindow({
-    width: 800,
-    height: 600,
-    parent: win,
-    modal: true,
-    show: false,
-    title: 'OSLite',
-    autoHideMenuBar: true, /* remover em produção */
-    webPreferences: {
-      //devTools: false, /* ativa em produção */
-      preload: path.join(__dirname, `src/controller/${child.controller}.js`)
-    }
-  })
-  winChild.loadURL(`file://${__dirname}/src/view/${child.view}.html`)
-  //winChild.menuBarVisible = false /* ativar em produção */
-  //winChild.maximize() /* ativar em produção */
-  winChild.once("ready-to-show", () => { winChild.show() })
+  mainWindow[settingWindow.window].loadFile(`src/windows/${settingWindow.window}/index.html`)
 }
 
 app.whenReady().then(() => {
-  createWinLogin()
+  createWindow(settingWindow({
+    width: 350,
+    height: 200,
+    title: 'OSLite login'
+  }))
+  
+  app.on('activate', function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow(loginWindow, 'login')
+  })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-// ipcMain.handle('login', async (event, args) => {})
 
-let userLogin;
-ipcMain.handle('logar', (event, args) => {
-  userLogin = args
-  createWindow()
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-  winLogin.close()
-})
+ipcMain.handle('login', (event, args) => {
+  createWindow(settingWindow({
+    window: 'dashboard'
+  }))
 
-ipcMain.handle('user', (event, args) => {
-   return userLogin
-})
-
-ipcMain.handle('child', (event, args) => {
-  createWinChild(args)
+  mainWindow.login.close()
 })

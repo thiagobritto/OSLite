@@ -1,0 +1,17 @@
+
+@charset 'utf-8';
+
+.form{
+    width: 300px;
+    padding: 15px 15px 0 15px;
+    position:absolute; 
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+#login-error{
+    opacity: 0;
+    padding: 5px;
+    transition: all 0.5s ease;
+}

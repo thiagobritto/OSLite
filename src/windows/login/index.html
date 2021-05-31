@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="../_dists/materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="../_dists/materialize/css/materialize.fonts.icons.css">
+    <link rel="stylesheet" href="../_dists/settings/css/generic.style.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="form">
+      <form name="login" class="col s12" action="./" method="GET">
+        <div class="row">
+          <div class="col s12">
+            <div class="input-field">
+              <input type="text" name="name" id="name" class="validate" autofocus>
+              <label for="name">Usúario</label>
+            </div>
+          </div>
+          <div class="col s7">
+            <div class="input-field">
+              <input type="password" name="pass" id="pass" class="validate">
+              <label for="pass">Senha</label>
+            </div>
+          </div>
+          <div class="col s5">
+            <div class="input-field">
+              <button name="entrar" class="btn waves-effect waves-light grey darken-4 right">
+                Entrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <script src="../_dists/materialize/js/materialize.min.js"></script>
+    <script src="renderer.js"></script>
+  </body>
+</html>

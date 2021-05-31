@@ -1,21 +1,28 @@
 {
-  "name": "oslite",
+  "name": "OSLite",
   "version": "1.0.0",
-  "description": "sistema de OS com electron js",
+  "description": "OSLite e um aplicação de ordem de serviço",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "rebuild": "electron-rebuild -f -w sqlite3"
+    "start": "electron ."
   },
-  "keywords": [],
-  "author": "Thiago Britto",
+  "repository": "https://github.com/thiagobritto/oslite",
+  "keywords": [
+    "OSLite",
+    "ordem",
+    "descktop",
+    "serviço",
+    "beta"
+  ],
+  "author": "ThiagoBritto",
   "license": "MIT",
-  "dependencies": {
-    "knex": "^0.95.1",
-    "sqlite3": "^5.0.2"
-  },
   "devDependencies": {
-    "electron": "^12.0.1",
-    "electron-rebuild": "^2.3.5"
+    "electron": "^13.0.1",
+    "electron-builder": "^22.10.5"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "knex": "^0.95.6",
+    "sqlite3": "^5.0.2"
   }
 }
