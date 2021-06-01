@@ -1,33 +1,20 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron')
-const path = require('path')
-const { settingWindow } = require('./src/windows/_dists/settings/js/settingWindow')
-
-let mainWindow = {}
-
-function createWindow (settingWindow) {
-  mainWindow[settingWindow.window] = new BrowserWindow({
-    width: settingWindow.width,
-    height: settingWindow.height,
-    title: settingWindow.title,
-    autoHideMenuBar: settingWindow.autoHideMenuBar,
-    webPreferences: {
-      preload: path.join(__dirname, `src/windows/${settingWindow.window}/preload.js`)
-    }
-  })
-
-  mainWindow[settingWindow.window].loadFile(`src/windows/${settingWindow.window}/index.html`)
-}
+const { app, ipcMain } = require('electron')
+const { mainWindow, createWindow } = require('./src/library/createWindow')
 
 app.whenReady().then(() => {
-  createWindow(settingWindow({
-    width: 350,
-    height: 200,
-    title: 'OSLite login'
-  }))
+  createWindow()
+    .setWidth(350)
+    .setHeight(250)
+    .setTitle('OSLite - Login')
+    .run()
   
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow(loginWindow, 'login')
+    if (BrowserWindow.getAllWindows().length === 0) 
+      createWindow().setWidth(350)
+        .setHeight(250)
+        .setTitle('OSLite - Login')
+        .run()
   })
 })
 
@@ -39,9 +26,6 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.handle('login', (event, args) => {
-  createWindow(settingWindow({
-    window: 'dashboard'
-  }))
-
+  createWindow().run('dashboard')
   mainWindow.login.close()
 })

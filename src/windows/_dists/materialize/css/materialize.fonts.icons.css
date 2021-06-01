@@ -3,7 +3,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url('../../fonts/materializa_font_icons.woff2') format('woff2');
+    src: url('../../../_res/fonts/materializa_font_icons.woff2') format('woff2');
   }
   
   .material-icons {
