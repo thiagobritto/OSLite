@@ -26,14 +26,17 @@ class MainWindow {
     setWebPreferences(obj) {
         this.webPreferences = obj
     }
-    run(page) {
+    run(page, view) {
         let pageWindow = page ? page : 'login'
 
         this.setWebPreferences({
             preload: path.join(dirname, `src/windows/${pageWindow}/preload.js`)
         })
-
+        
         mainWindow[pageWindow] = new BrowserWindow(this)
+        
+        if (view) view(mainWindow[pageWindow])
+        
         mainWindow[pageWindow].loadFile(path.join(dirname, `src/windows/${pageWindow}/index.html`))
         //console.log(this);
         return this
