@@ -9,7 +9,9 @@ class MainWindow {
         this.width = 800
         this.height = 600
         this.title = 'OSLite'
+        this.icon = dirname + "icon_dark.png"
         this.autoHideMenuBar = true
+        this.webPreferences = {}
     }
     setWidth(width) {
         this.width = width
@@ -23,23 +25,53 @@ class MainWindow {
         this.title = title
         return this
     }
-    setWebPreferences(obj) {
-        this.webPreferences = obj
+    setParent(parent){
+        this.parent = parent
+        return this
     }
-    run(page, view) {
-        let pageWindow = page ? page : 'login'
+    setModal(modal){
+        this.modal = modal
+        return this
+    }
+    setShow(show){
+        this.show = show
+        return this
+    }
+    setResizable(resizable){
+        this.resizable = resizable
+        return this
+    }
+    setMaximizable(maximizable){
+        this.maximizable = maximizable
+        return this
+    }
+    setCenter(center){
+        this.center = center
+        return this
+    }
+    // webPreferences
+    setdDevTools(devTools){
+        this.webPreferences.devTools = devTools
+        return this
+    }
+    setPreload(preload){
+        this.webPreferences.preload = path.join(dirname, `src/windows/${preload}/preload.js`)
+        return this
+    }
+    // main
+    run(pageName, setCall) 
+    {
+        let pageWindow = pageName ? pageName : 'login'
 
-        this.setWebPreferences({
-            preload: path.join(dirname, `src/windows/${pageWindow}/preload.js`)
-        })
+        this.setPreload(pageWindow)
         
         mainWindow[pageWindow] = new BrowserWindow(this)
         
-        if (view) view(mainWindow[pageWindow])
+        if (setCall) setCall(mainWindow[pageWindow], this)
         
-        mainWindow[pageWindow].loadFile(path.join(dirname, `src/windows/${pageWindow}/index.html`))
+        mainWindow[pageWindow].loadURL(`file://${dirname}/src/windows/${pageWindow}/index.html`)
+        mainWindow[pageWindow].once("ready-to-show", () => { mainWindow[pageWindow].show() })
         //console.log(this);
-        return this
     }
 }
 

@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserView, ipcMain } = require('electron')
+const { app, ipcMain, screen } = require('electron')
 const { mainWindow, createWindow } = require('./src/library/createWindow')
 
 app.whenReady().then(() => {
@@ -7,13 +7,22 @@ app.whenReady().then(() => {
     .setWidth(350)
     .setHeight(250)
     .setTitle('OSLite - Login')
+    .setMaximizable(false)
+    .setResizable(false)
+    .setCenter(true)
+    .setdDevTools(false)
     .run()
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0)
-      createWindow().setWidth(350)
+      createWindow()
+        .setWidth(350)
         .setHeight(250)
         .setTitle('OSLite - Login')
+        .setMaximizable(false)
+        .setResizable(false)
+        .setCenter(true)
+        .setdDevTools(false)
         .run()
   })
 })
@@ -26,11 +35,12 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.handle('login', (event, args) => {
-  createWindow().run('dashboard', (win) => {
-    const view = new BrowserView()
-    win.setBrowserView(view)
-    view.setBounds({ x: 0, y: 0, width: 360, height: 360 })
-    view.webContents.loadURL('https://www.electronjs.org')
-  })
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+  createWindow()
+    .setWidth(width)
+    .setTitle(height)
+    .run('dashboard')
+  mainWindow.dashboard.maximize()
+  mainWindow.dashboard.webContents.openDevTools()
   mainWindow.login.close()
 })

@@ -5,7 +5,8 @@ const knex = require('../../database')
 const bcrypt = require('bcrypt')
 
 document.addEventListener('DOMContentLoaded', () => {
-  login.entrar.onclick = (e) => {
+  let entrar = document.getElementById('entrar')
+  entrar.onclick = (e) => {
     e.preventDefault()
 
     knex('users').then( results => {
