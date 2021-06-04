@@ -10,7 +10,7 @@ app.whenReady().then(() => {
     .setMaximizable(false)
     .setResizable(false)
     .setCenter(true)
-    .setdDevTools(false)
+    .setdDevTools(true)
     .run()
 
   app.on('activate', function () {

@@ -10,15 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
 
     knex('users').then( results => {
+      let user
       results.map( table => {
-        if (table.userName == login.name.value){
-          checkPassword(login.pass.value, table.password).then( checkin => {
-            if ( checkin ){
-              ipcRenderer.invoke('login', table)
-            } else errorLogin()
-          })
-        } else errorLogin()
+        if (table.userName == login.name.value) user = table
       })
+      return user
+    }).then( async table => {
+      if (table) {
+        if (await checkPassword(login.pass.value, table.password)){
+          ipcRenderer.invoke('login', table)
+        } else errorLogin()
+      } else errorLogin()
     })
   }
 })
