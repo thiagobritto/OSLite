@@ -3,11 +3,8 @@
 
 .form{
     width: 300px;
-    padding: 15px 15px 0 15px;
-    position:absolute; 
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
+    padding: 0 15px;
+    margin: 0 auto;    
 }
 
 #login-error{
@@ -15,3 +12,15 @@
     padding: 5px;
     transition: all 0.5s ease;
 }
+ .logo{
+     text-align: center;
+     margin: 0;
+     padding: 15px;
+ }
+
+ .tests{
+    position:absolute; 
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+ }

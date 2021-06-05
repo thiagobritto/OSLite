@@ -1,5 +1,6 @@
-const bcrypt = require('bcrypt')
+
 const knex = require('../database')
+const { checkPassword } = require('../library/emcryptDecript')
 
 async function loginController(namePass){
     try{
@@ -10,20 +11,5 @@ async function loginController(namePass){
         return false; 
     }
 }
-
-async function checkPassword(pass, hash){
-    const match = await bcrypt.compare(pass, hash)
-    if (match) {
-        return true;
-    } else {
-        return false
-    }
-}
-
-//examinando o hash de 2^10 até 2^20
-//  bcrypt.hash(pass, 12)
-//    .then((passHashed)=> {
-//          console.log(passHashed);
-//    });
 
 module.exports = { loginController }

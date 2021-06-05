@@ -1,6 +1,30 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// No Node.js APIs are available in this process because
-// `nodeIntegration` is turned off. Use `preload.js` to
-// selectively enable features needed in the rendering
-// process.
+
+// setting menu area to hide it
+
+let aside = document.querySelector('aside')
+let bottonBar = document.createElement('div')
+
+bottonBar.setAttribute('class', 'botton-bar')
+aside.appendChild(bottonBar)
+
+// setting button menu toggle
+
+let [...btnDrop] = document.getElementsByClassName('drop')
+
+btnDrop.map( btn => {
+    btn.onclick = () => {
+        let list = btn.querySelector('.menu-drop')
+        list.classList.toggle("drop-show")
+    } 
+})
+
+bottonBar.onclick = hideMenu
+document.querySelector('main').onclick = hideMenu
+document.querySelector('header').onclick = hideMenu
+
+function hideMenu(){
+    btnDrop.map(btn => {
+        let list = btn.querySelector('.menu-drop')
+        list.classList.remove("drop-show") 
+    }) 
+}

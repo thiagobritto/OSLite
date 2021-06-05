@@ -3,8 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <!--
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  -->
   <link rel="stylesheet" href="../_dists/materialize/css/materialize.min.css">
   <link rel="stylesheet" href="../_dists/materialize/css/materialize.fonts.icons.css">
   <link rel="stylesheet" href="../_res/css/generic.style.css">
@@ -12,11 +14,42 @@
 </head>
 
 <body>
-  <h1>dash</h1>
-  <a href="https://web.whatsapp.com/" target="_blank"> whatsapp web/</a>
-
+  <aside>
+    <header id="titulo">
+      <h1>Logo</h1>
+    </header>
+    <ul class="menu">
+      <li>OS</li>
+      <li class="drop">
+        <span>Cadastro</span>
+        <ul class="menu-drop">
+          <li id="client">Clientes</li>
+          <li>Carros</li>
+          <li>Usuários</li>
+        </ul>
+      </li>
+      <li>Reletorios</li>
+      <li>Sair</li>
+      <li class="drop">
+        <span>Agenda</span>
+        <ul class="menu-drop">
+          <li>Troca de oleo</li>
+          <li>Reparos</li>
+          <li>Revisôes</li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+  <main>
+    <header id="titulo">titullo</header>
+    <section>
+      <p>
+        main 
+      </p> 
+    </section>
+  </main>
   <script src="../_dists/materialize/js/materialize.min.js"></script>
-  <script src="renderer.js"></script>
+  <script src="./renderer.js"></script>
 </body>
 
 </html>

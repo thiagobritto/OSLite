@@ -2,7 +2,7 @@
 const { ipcRenderer } = require('electron')
 require('../_dists/materialize/js/materialize')
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('entrar').onclick = (e) => {
     e.preventDefault()
     try{

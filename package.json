@@ -1,5 +1,5 @@
 {
-  "name": "OSLite",
+  "name": "oslite",
   "version": "1.0.0",
   "description": "OSLite e um aplicação de ordem de serviço",
   "main": "main.js",
