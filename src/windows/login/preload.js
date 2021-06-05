@@ -1,45 +1,34 @@
-require('../_dists/materialize/js/materialize')
 
 const { ipcRenderer } = require('electron')
-const knex = require('../../database')
-const bcrypt = require('bcrypt')
+require('../_dists/materialize/js/materialize')
 
 document.addEventListener('DOMContentLoaded', () => {
-  let entrar = document.getElementById('entrar')
-  entrar.onclick = (e) => {
+  document.getElementById('entrar').onclick = (e) => {
     e.preventDefault()
-
-    knex('users').then( results => {
-      let user
-      results.map( table => {
-        if (table.userName == login.name.value) user = table
+    try{
+      let userLogin = {
+        user: login.name.value ? login.name.value : nameNull(),
+        pass: login.pass.value ? login.pass.value : passNull()
+      }
+      ipcRenderer.invoke('login', userLogin ).then((result) => {
+        if (result == false) valueError('Usuário ou senha invalidos!')
       })
-      return user
-    }).then( async table => {
-      if (table) {
-        if (await checkPassword(login.pass.value, table.password)){
-          ipcRenderer.invoke('login', table)
-        } else errorLogin()
-      } else errorLogin()
-    })
+    }catch(err){
+      valueError(err)
+    }
   }
 })
 
-async function checkPassword(pass, hash){
-  const match = await bcrypt.compare(pass, hash)
-  if (match) {
-    return true;
-  } else {
-    return false
-  }
+// functions
+
+function nameNull(){
+  throw 'Usuário não preenchido!'
 }
 
-function errorLogin(){
-  M.toast({html: 'Usuário ou senha invalidos!'})
+function passNull(){
+  throw 'Senha não preenchida!'
 }
 
-//examinando o hash de 2^10 até 2^20
-//  bcrypt.hash(pass, 12)
-//    .then((passHashed)=> {
-//          console.log(passHashed);
-//    });
+function valueError(msg){
+  M.toast({html: msg})
+}

@@ -34,13 +34,20 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-ipcMain.handle('login', (event, args) => {
-  const { width, height } = screen.getPrimaryDisplay().workAreaSize
-  createWindow()
-    .setWidth(width)
-    .setTitle(height)
-    .run('dashboard')
-  mainWindow.dashboard.maximize()
-  mainWindow.dashboard.webContents.openDevTools()
-  mainWindow.login.close()
+const { loginController } = require('./src/controller/loginController')
+
+ipcMain.handle('login', async (event, args) => {
+  let res = await loginController(args)
+  if (res){
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize
+    createWindow()
+        .setWidth(width)
+        .setHeight(height)
+        .setTitle('OSLite')
+        .run('dashboard')
+
+    mainWindow.dashboard.maximize()      
+    mainWindow.dashboard.webContents.openDevTools()      
+    mainWindow.login.close()      
+  } else return false
 })
