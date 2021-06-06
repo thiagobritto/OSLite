@@ -9,13 +9,18 @@ aside.appendChild(bottonBar)
 
 // setting button menu toggle
 
-let [...btnDrop] = document.getElementsByClassName('drop')
+let [...list] = document.querySelectorAll('.menu li')
 
-btnDrop.map( btn => {
-    btn.onclick = () => {
-        let list = btn.querySelector('.menu-drop')
-        list.classList.toggle("drop-show")
-    } 
+list.map(li => {
+    if (!(li.classList.value.indexOf('drop') > -1)) {
+        li.onclick = hideMenu
+    } else {
+        li.onclick = () => {
+            let lista = li.querySelector('.menu-drop')
+            lista.classList.toggle("drop-show")
+            lista.onclick = () => lista.classList.toggle("drop-show")
+        }
+    }
 })
 
 bottonBar.onclick = hideMenu
@@ -23,8 +28,8 @@ document.querySelector('main').onclick = hideMenu
 document.querySelector('header').onclick = hideMenu
 
 function hideMenu(){
-    btnDrop.map(btn => {
-        let list = btn.querySelector('.menu-drop')
-        list.classList.remove("drop-show") 
+    list.map(btn => {
+        let lista = btn.querySelector('.menu-drop')
+        if (lista != null) lista.classList.remove("drop-show") 
     }) 
 }

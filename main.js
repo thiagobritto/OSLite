@@ -16,14 +16,14 @@ app.on('window-all-closed', function () {
 
 function crateLogin(){
   createWindow()
-  .setWidth(350)
-  .setHeight(250)
-  .setTitle('Login')
-  .setMaximizable(false)
-  .setResizable(false)
-  .setCenter(true)
-  .setdDevTools(true)
-  .run()
+    .setWidth(350)
+    .setHeight(250)
+    .setTitle('Login')
+    .setMaximizable(false)
+    .setResizable(false)
+    .setCenter(true)
+    .setdDevTools(false)
+    .run()
 }
 
 // In this file you can include the rest of your app's specific main process
@@ -38,16 +38,17 @@ ipcMain.handle('login', async (event, args) => {
   if (dataUser){
     const { width, height } = screen.getPrimaryDisplay().workAreaSize
     createWindow()
-        .setWidth(width)
-        .setHeight(height)
-        .setTitle('OSLite - ' + dataUser.userName)
-        .run('dashboard')
+      .setWidth(width)
+      .setHeight(height)
+      .setTitle('OSLite - ' + dataUser.userName)
+      .run('dashboard')
     
     mainWindow.dashboard.maximize()      
     mainWindow.dashboard.webContents.openDevTools()      
     mainWindow.login.close()      
   } else return false
 })
+
 
 ipcMain.on('logout', (event, args) => {
   crateLogin()
@@ -63,3 +64,4 @@ ipcMain.on('dataUser', (event, arg) => {
     status: dataUser.status 
   }
 })
+
