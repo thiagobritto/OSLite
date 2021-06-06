@@ -1,6 +1,7 @@
 
 const knex = require('../database')
 const { checkPassword } = require('../library/emcryptDecript')
+let dataUser
 
 async function loginController(namePass){
     try{

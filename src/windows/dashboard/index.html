@@ -19,7 +19,15 @@
       <h1>Logo</h1>
     </header>
     <ul class="menu">
-      <li>OS</li>
+      <li id="os">OS</li>
+      <li class="drop">
+        <span>Agenda</span>
+        <ul class="menu-drop">
+          <li>Troca de oleo</li>
+          <li>Reparos</li>
+          <li>Revisôes</li>
+        </ul>
+      </li>
       <li class="drop">
         <span>Cadastro</span>
         <ul class="menu-drop">
@@ -30,24 +38,15 @@
       </li>
       <li>Reletorios</li>
       <li>Sair</li>
-      <li class="drop">
-        <span>Agenda</span>
-        <ul class="menu-drop">
-          <li>Troca de oleo</li>
-          <li>Reparos</li>
-          <li>Revisôes</li>
-        </ul>
-      </li>
     </ul>
   </aside>
   <main>
     <header id="titulo">titullo</header>
-    <section>
-      <p>
-        main 
-      </p> 
+    <section id="view">
+      {{ Conteudo }} 
     </section>
   </main>
+
   <script src="../_dists/materialize/js/materialize.min.js"></script>
   <script src="./renderer.js"></script>
 </body>

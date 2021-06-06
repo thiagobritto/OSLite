@@ -36,18 +36,30 @@ app.on('window-all-closed', function () {
 
 const { loginController } = require('./src/controller/loginController')
 
+var dataUser
+
 ipcMain.handle('login', async (event, args) => {
-  let res = await loginController(args)
-  if (res){
+  dataUser = await loginController(args)
+  if (dataUser){
     const { width, height } = screen.getPrimaryDisplay().workAreaSize
     createWindow()
         .setWidth(width)
         .setHeight(height)
-        .setTitle('OSLite')
+        .setTitle('OSLite - ' + dataUser.userName)
         .run('dashboard')
-
+    
     mainWindow.dashboard.maximize()      
     mainWindow.dashboard.webContents.openDevTools()      
     mainWindow.login.close()      
   } else return false
+})
+
+ipcMain.on('dataUser', (event, arg) => {
+  // synchronous-message
+  event.returnValue = { 
+    id: dataUser.id,
+    userName: dataUser.userName, 
+    super: dataUser.super, 
+    status: dataUser.status 
+  }
 })
