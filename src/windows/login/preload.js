@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
         user: login.name.value ? login.name.value : nameNull(),
         pass: login.pass.value ? login.pass.value : passNull()
       }
+      // Envie uma mensagem para o processo principal via channele espere um resultado de forma assíncrona.
       ipcRenderer.invoke('login', userLogin ).then((result) => {
         if (result == false) valueError('Usuário ou senha invalidos!')
       })

@@ -3,33 +3,28 @@ const { app, ipcMain, screen } = require('electron')
 const { mainWindow, createWindow } = require('./src/library/createWindow')
 
 app.whenReady().then(() => {
-  createWindow()
-    .setWidth(350)
-    .setHeight(250)
-    .setTitle('Login')
-    .setMaximizable(false)
-    .setResizable(false)
-    .setCenter(true)
-    .setdDevTools(true)
-    .run()
+  crateLogin()
 
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0)
-      createWindow()
-        .setWidth(350)
-        .setHeight(250)
-        .setTitle('Login')
-        .setMaximizable(false)
-        .setResizable(false)
-        .setCenter(true)
-        .setdDevTools(false)
-        .run()
+    if (BrowserWindow.getAllWindows().length === 0) crateLogin()
   })
 })
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+function crateLogin(){
+  createWindow()
+  .setWidth(350)
+  .setHeight(250)
+  .setTitle('Login')
+  .setMaximizable(false)
+  .setResizable(false)
+  .setCenter(true)
+  .setdDevTools(true)
+  .run()
+}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
@@ -52,6 +47,11 @@ ipcMain.handle('login', async (event, args) => {
     mainWindow.dashboard.webContents.openDevTools()      
     mainWindow.login.close()      
   } else return false
+})
+
+ipcMain.on('logout', (event, args) => {
+  crateLogin()
+  mainWindow.dashboard.close()
 })
 
 ipcMain.on('dataUser', (event, arg) => {

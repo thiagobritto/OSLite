@@ -7,7 +7,8 @@ async function loginController(namePass){
     try{
         let stmt = await knex('users').where('userName', namePass.user)
         let verify = await checkPassword(namePass.pass, stmt[0].password)
-        return verify ? stmt[0] : false
+        if (verify && stmt[0].status == 1) return stmt[0]
+        return false
     } catch(err){
         return false; 
     }
