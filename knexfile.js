@@ -7,6 +7,7 @@ module.exports = {
     connection: {
       filename: './src/database/oslite.db'
     },
+    useNullAsDefault: true,
     migrations: {
       tableName: 'knex_migrations',
       directory: `${__dirname}/src/database/migrations`

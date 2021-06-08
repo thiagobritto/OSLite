@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('users', function(table){
-        table.increments('id')
+        table.increments('id').primary()
         table.text('userName').unique().notNullable()
         table.text('password').notNullable()
         table.boolean('status').notNullable().defaultTo(0)

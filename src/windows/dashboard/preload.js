@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron')
 window.addEventListener('DOMContentLoaded', () => {
 
     // Envie uma mensagem para o processo principal via channele espere um resultado de forma síncrona.
-    let dataUser = ipcRenderer.sendSync('dataUser')
+    let dataUser = ipcRenderer.sendSync('getUser')
     
     if ( dataUser.super < 1) {
         removeElement(document.getElementById('cad_user'))
@@ -13,9 +13,10 @@ window.addEventListener('DOMContentLoaded', () => {
     } 
     
     document.getElementById('logout').onclick = () => {
-        // Envie uma mensagem assíncrona para o processo principal através do channel, juntamente com argumentos
         if (window.confirm("Deseja sair do OSLite?")) ipcRenderer.send('logout')
     }
+
+    document.getElementById('cad_user').onclick = () => ipcRenderer.send('manageUser')
 
 })
 
