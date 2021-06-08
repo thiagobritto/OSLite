@@ -66,7 +66,12 @@ ul.menu li, .drop span{
     transition: 0.4s;
 }
 
-ul li:hover, .drop:hover span, .menu-select{
+ul.menu li{
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-left: 8px solid rgba(255, 255, 255, 0);
+}
+
+ul li:hover, .menu-select{
     cursor: pointer;
     filter: brightness(90%);
     border: 1px solid rgba(255, 255, 255, 0.6);
@@ -90,10 +95,6 @@ ul li:hover, .drop:hover span, .menu-select{
     transform-origin: left;
     transform: perspective(100px) rotateY(90deg);
     transition: 0.2s;
-}
-
-.drop:hover{
-    border: none;
 }
 
 .drop-show{

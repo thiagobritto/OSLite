@@ -5,7 +5,7 @@ const { checkPassword } = require('../library/emcryptDecript')
 
 class LoginController {
     constructor(appData) {
-        LoginController.app = appData
+        for (let key in appData) LoginController[key] = appData[key]
     }
 
     async login(event, args) {
@@ -15,14 +15,14 @@ class LoginController {
             if (verify && stmt[0].status == 1) {
                 const { width, height } = screen.getPrimaryDisplay().workAreaSize
                 LoginController.dataUser = stmt[0]
-                LoginController.app.createWindow()
+                LoginController.createWindow()
                     .setWidth(width)
                     .setHeight(height)
                     .setTitle('OSLite - ' + stmt[0].userName)
                     .run('dashboard')
-                LoginController.app.mainWindow.dashboard.maximize()
-                LoginController.app.mainWindow.dashboard.webContents.openDevTools()
-                LoginController.app.mainWindow.login.close()
+                LoginController.mainWindow.dashboard.maximize()
+                LoginController.mainWindow.dashboard.webContents.openDevTools()
+                LoginController.mainWindow.login.close()
                 return true
             } 
             return false
@@ -42,4 +42,4 @@ class LoginController {
     }
 }
 
-module.exports = (obj = {}) => new LoginController(obj)
+module.exports = (appData = {}) => new LoginController(appData)

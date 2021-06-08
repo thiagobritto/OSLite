@@ -4,11 +4,11 @@
 class DashController {
 
     constructor(appData){
-        DashController.app = appData
+        for (let key in appData) DashController[key] = appData[key]
     }
 
     logout(event, arg) {
-        DashController.app.createWindow()
+        DashController.createWindow()
             .setWidth(350)
             .setHeight(250)
             .setTitle('Login')
@@ -17,12 +17,12 @@ class DashController {
             .setCenter(true)
             .setdDevTools(false)
             .run()
-            DashController.app.mainWindow.dashboard.close()
+            DashController.mainWindow.dashboard.close()
     }
 
     manageUser(event, arg){
-        DashController.app.createWindow()
-            .setParent(DashController.app.mainWindow.dashboard)
+        DashController.createWindow()
+            .setParent(DashController.mainWindow.dashboard)
             .setModal(true)
             .setShow(false)
             .run('manageUser')
@@ -30,4 +30,4 @@ class DashController {
 
 }
 
-module.exports = (appData) => new DashController(appData)
+module.exports = (appData = {}) => new DashController(appData)
