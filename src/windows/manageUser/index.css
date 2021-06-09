@@ -1,0 +1,10 @@
+
+@charset 'utf-8';
+
+nav{
+    background-color: var(--backColorHeader);
+}
+
+.body_insert{
+    padding-top: 20px;
+}

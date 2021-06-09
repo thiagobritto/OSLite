@@ -5,7 +5,7 @@ module.exports = (createWindow) => {
     app.whenReady().then(() => {
         createWindow()
             .setWidth(350)
-            .setHeight(250)
+            .setHeight(280)
             .setTitle('Login')
             .setMaximizable(false)
             .setResizable(false)
@@ -17,7 +17,7 @@ module.exports = (createWindow) => {
             if (BrowserWindow.getAllWindows().length === 0) {
                 createWindow()
                     .setWidth(350)
-                    .setHeight(250)
+                    .setHeight(280)
                     .setTitle('Login')
                     .setMaximizable(false)
                     .setResizable(false)
