@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "ejs": "^3.1.6",
+    "html-pdf": "^3.0.1",
     "knex": "^0.95.6",
     "sqlite3": "^5.0.2"
   }

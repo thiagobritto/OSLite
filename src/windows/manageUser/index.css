@@ -8,3 +8,11 @@ nav{
 .body_insert{
     padding-top: 20px;
 }
+
+#manager table tr td, #manager table tr th{
+    text-align: center;
+}
+
+.userName{
+    text-align: left !important;
+}

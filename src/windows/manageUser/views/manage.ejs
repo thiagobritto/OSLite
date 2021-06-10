@@ -1,0 +1,28 @@
+<div class="row">
+    <table id="table">
+        <tr>
+            <th>Matrícula</th>
+            <th>Usuário</th>
+            <th>Ativo</th>
+            <th>Administrativo</th>
+            <th>Editar</th>
+            <th>Remover</th>
+        </tr>
+        <% appData.forEach(appData => { %>
+            <tr>
+                <td><%=appData.id%></td>
+                <td class="userName"><%=appData.userName[0].toUpperCase() + appData.userName.substr(1)%></td>
+                <% if (appData.status > 0) { %>
+                    <td>Sim</td>
+                <% } else { %>
+                    <td>Não</td>
+                <% } %>
+                <% if (appData.super > 0) { %>
+                    <td>Sim</td>
+                <% } else { %>
+                    <td>Não</td>
+                <% } %>
+            </tr>
+        <% }); %>
+    </table>
+</div>

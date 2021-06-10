@@ -21,7 +21,7 @@ class LoginController {
                     .setTitle('OSLite - ' + stmt[0].userName)
                     .run('dashboard')
                 LoginController.mainWindow.dashboard.maximize()
-                LoginController.mainWindow.dashboard.webContents.openDevTools()
+                //LoginController.mainWindow.dashboard.webContents.openDevTools()
                 LoginController.mainWindow.login.close()
                 return true
             } 

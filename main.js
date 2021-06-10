@@ -14,12 +14,15 @@ const dash = require('./src/controller/dashboardController')({
   mainWindow
 })
 
+const user = require('./src/controller/userController')({
+  createWindow,
+  mainWindow
+})
+
 ipcMain.handle('login', login.login)
 ipcMain.on('getUser', login.getDataUser)
 
 ipcMain.on('logout', dash.logout)
 ipcMain.on('manageUser', dash.manageUser)
 
-//ipcMain.on('test', (event, args) => {
-  //console.log(login.dataUser);
-//})
+ipcMain.handle('getDataUsers', user.select)
