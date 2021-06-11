@@ -40,6 +40,7 @@ class LoginController {
             status: LoginController.dataUser.status 
         }
     }
+    
 }
 
 module.exports = (appData = {}) => new LoginController(appData)

@@ -3,25 +3,25 @@
         <tr>
             <th>Matrícula</th>
             <th>Usuário</th>
-            <th>Ativo</th>
             <th>Administrativo</th>
+            <th>Ativo</th>
             <th>Editar</th>
-            <th>Remover</th>
         </tr>
         <% appData.forEach(appData => { %>
             <tr>
                 <td><%=appData.id%></td>
                 <td class="userName"><%=appData.userName[0].toUpperCase() + appData.userName.substr(1)%></td>
-                <% if (appData.status > 0) { %>
-                    <td>Sim</td>
-                <% } else { %>
-                    <td>Não</td>
-                <% } %>
                 <% if (appData.super > 0) { %>
-                    <td>Sim</td>
+                    <td><a href="#"><i data-super="0" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check</i></a></td>
                 <% } else { %>
-                    <td>Não</td>
+                    <td><a href="#"><i data-super="1" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
                 <% } %>
+                <% if (appData.status > 0) { %>
+                    <td><a href="#"><i data-status="0" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check</i></a></td>
+                <% } else { %>
+                    <td><a href="#"><i data-status="1" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
+                <% } %>
+                <td><a href="#"><i class="material-icons blue-text">edit</i></a></td>
             </tr>
         <% }); %>
     </table>

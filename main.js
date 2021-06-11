@@ -26,3 +26,6 @@ ipcMain.on('logout', dash.logout)
 ipcMain.on('manageUser', dash.manageUser)
 
 ipcMain.handle('getDataUsers', user.select)
+ipcMain.handle('setSuper', user.update)
+ipcMain.handle('setStatus', user.update)
+ipcMain.handle('insertUser', user.insert)
