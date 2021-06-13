@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 async function getData(){
-    return await ipcRenderer.invoke('getDataUsers').then( results => results )
+    return await ipcRenderer.invoke('getDataUsers')
 }
 
 function insertPage(){
@@ -21,27 +21,31 @@ function insertPage(){
     ejs.renderFile( file, {}, (err, data ) => {
         document.getElementById('manager').innerHTML = data
     })
-    insertUser()
+    setInsertUser()
 }
 
-function insertUser(){
+function setInsertUser(){
     document.getElementById('cadastrar').onclick = (e) => {
         e.preventDefault()
         try{
             let data = {
-                name: document.getElementById('id_user').value,
-                pass: document.getElementById('id_pass').value,
-                confirme: document.getElementById('id_pass_conf').value,
-                admin: document.getElementById('id_admin').checked,
-                status: document.getElementById('id_active').checked
-            }
-            for (let key in data){
-                if (data[key] === "") throw 'Preencha todos os campos! '+key;
-            }
-            let results = ipcRenderer.invoke('insertUser', data).then( results => results)
-            if (!results) throw 'Erro ao incerir registro!';
+                username: document.getElementById('id_user').value,
+                password: document.getElementById('id_pass').value,
+                super: document.getElementById('id_admin').checked ? 1 : 0,
+                status: document.getElementById('id_active').checked ? 1 : 0
+            };
             
-            console.log('os');
+            for (let k in data) if (data[k] === '') throw 'Preencha totos os campos';
+
+            if(data.password != document.getElementById('id_pass_conf').value)
+            throw 'As senha não batem!';
+
+            ipcRenderer.invoke('insertUser', data).then( res => {
+                if (res[0] == undefined) throw 'Usuário já cadastrado!';
+                console.log('cadastrado...');
+            }).catch(err => {
+                console.log(err);
+            });
 
         } catch(err){
             console.log(err);
@@ -49,29 +53,40 @@ function insertUser(){
     }
 }
 
-function managerPage(appData){
+function managerPage(appData, init = 0, end = 5){
+
     let file = path.join(__dirname,'views/manage.ejs')
-    ejs.renderFile( file, {appData}, (err, data ) => {
+    ejs.renderFile( file, {appData, init, end}, (err, data ) => {
         document.getElementById('manager').innerHTML = data
     })
-    manageUser('setSuper', 'super')
-    manageUser('setStatus', 'status')
+    
+    setManageUser('setSuper', 'super')
+    setManageUser('setStatus', 'status')
+
+    let [...pageInd] = document.getElementsByClassName('page')
+    pageInd.map(ind => {
+        ind.onclick = () => {
+            managerPage(
+                appData,
+                Number.parseInt(ind.getAttribute('data-init')),
+                Number.parseInt(ind.getAttribute('data-end'))
+            )
+        }
+    })
 }
 
-function manageUser(inv, btn) {
+function setManageUser(inv, btn) {
     let [...elements] = document.getElementsByClassName(btn)
     elements.map( btn_elements => {
         btn_elements.onclick = function () {
-            let data = { userId: this.getAttribute(`data-${btn}-id`), data: {} }
-            data.data[btn] = this.getAttribute(`data-${btn}`)
+            let id = this.getAttribute(`data-${btn}-id`)
+            let value = this.getAttribute(`data-${btn}`)
             
-            console.log(data);
-            ipcRenderer.invoke(inv, data).then( results => {
-                if (results){
-                    getData().then( dataAll => {
-                        managerPage(dataAll)
-                    })                 
-                }
+            ipcRenderer.invoke(inv, {id, value}).then( results => {
+                //console.log(results);
+                getData().then( data => {
+                    managerPage(data)  
+                })
             })    
         }
     })

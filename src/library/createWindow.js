@@ -50,7 +50,7 @@ class MainWindow {
         return this
     }
     // webPreferences
-    setdDevTools(devTools){
+    setDevTools(devTools){
         this.webPreferences.devTools = devTools
         return this
     }

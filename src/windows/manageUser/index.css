@@ -16,3 +16,9 @@ nav{
 .userName{
     text-align: left !important;
 }
+
+#pagination{
+    position: fixed;
+    width: 100%;
+    bottom: 80px;
+}

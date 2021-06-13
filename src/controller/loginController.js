@@ -1,7 +1,8 @@
 
-const knex = require('../database')
 const { screen } = require('electron')
 const { checkPassword } = require('../library/emcryptDecript')
+
+const user = require('../database/CRUD')('users')
 
 class LoginController {
     constructor(appData) {
@@ -10,7 +11,7 @@ class LoginController {
 
     async login(event, args) {
         try {
-            let stmt = await knex('users').where('userName', args.user)
+            let stmt = await user.selectWhere({'userName': args.user})
             let verify = await checkPassword(args.pass, stmt[0].password)
             if (verify && stmt[0].status == 1) {
                 const { width, height } = screen.getPrimaryDisplay().workAreaSize

@@ -1,3 +1,4 @@
+<%let pages = Math.ceil(appData.length / 5);%>
 <div class="row">
     <table id="table">
         <tr>
@@ -7,22 +8,48 @@
             <th>Ativo</th>
             <th>Editar</th>
         </tr>
-        <% appData.forEach(appData => { %>
-            <tr>
-                <td><%=appData.id%></td>
-                <td class="userName"><%=appData.userName[0].toUpperCase() + appData.userName.substr(1)%></td>
-                <% if (appData.super > 0) { %>
-                    <td><a href="#"><i data-super="0" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check</i></a></td>
-                <% } else { %>
-                    <td><a href="#"><i data-super="1" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
-                <% } %>
-                <% if (appData.status > 0) { %>
-                    <td><a href="#"><i data-status="0" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check</i></a></td>
-                <% } else { %>
-                    <td><a href="#"><i data-status="1" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
-                <% } %>
-                <td><a href="#"><i class="material-icons blue-text">edit</i></a></td>
-            </tr>
-        <% }); %>
+        <% for(let i = init; i < end; i++ ) { %>
+            <% try{ %>
+                <tr>
+                    <td><%=appData[i].id%></td>
+                    <td class="userName"><%=appData[i].userName[0].toUpperCase() + appData[i].userName.substr(1)%></td>
+                    <% if (appData[i].super > 0) { %>
+                        <td><a href="#"><i data-super="0" data-super-id="<%=appData[i].id%>" class="material-icons blue-text super">check</i></a></td>
+                    <% } else { %>
+                        <td><a href="#"><i data-super="1" data-super-id="<%=appData[i].id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
+                    <% } %>
+                    <% if (appData[i].status > 0) { %>
+                        <td><a href="#"><i data-status="0" data-status-id="<%=appData[i].id%>" class="material-icons blue-text status">check</i></a></td>
+                    <% } else { %>
+                        <td><a href="#"><i data-status="1" data-status-id="<%=appData[i].id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
+                    <% } %>
+                    <td><a href="#"><i class="material-icons blue-text">edit</i></a></td>
+                </tr>
+            <% } catch(err) { %>
+                <%break;%>
+            <% } %>
+        <% } %>
     </table>
+</div>
+
+<div id="pagination" class="row">
+    <ul class="pagination center">
+        <% if ( init > 0 ) { %>
+            <li class="waves-effect"><a href="#!" class="page" data-init="<%=init-5%>" data-end="<%=end-5%>"><i class="material-icons">chevron_left</i></a></li>
+        <% } else { %>
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <% } %>
+        <% for (let i = 0; i < pages; i++){ %>
+            <% if ( (((i+1)*5)-5) == init && ((i+1)*5) == end ) { %>
+                <li class="active grey darken-4"><a href="#!" class="page" data-init="<%=((i+1)*5)-5%>" data-end="<%=(i+1)*5%>"><%=(i+1)%></a></li>
+            <% } else { %>
+                <li class="waves-effect"><a href="#!" class="page" data-init="<%=((i+1)*5)-5%>" data-end="<%=(i+1)*5%>"><%=(i+1)%></a></li>
+            <% } %>
+        <% }; %>
+        <% if (end < appData.length ) { %>
+            <li class="waves-effect"><a href="#!" class="page" data-init="<%=init+5%>" data-end="<%=end+5%>"><i class="material-icons">chevron_right</i></a></li>
+        <% } else { %>
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        <% } %>
+    </ul>
 </div>

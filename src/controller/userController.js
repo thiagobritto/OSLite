@@ -1,40 +1,25 @@
 
-const knex = require('../database')
+const user = require('../database/CRUD')('users')
 const { passwordHash } = require('../library/emcryptDecript')
+
+// select * from table  limit 0, 5;
 
 class UserController {
 
     constructor(appData) {
         for (let key in appData) UserController[key] = appData[key]
     }
-
     async insert(event, args) {
-        let res = await knex('users')
-            .returning('id')
-            .insert([
-                { 
-                    username: args.name, 
-                    password: passwordHash(args.pass), 
-                    super: args.admin,
-                    status: args.status 
-                }
-            ])
-        return res ? res : false;
+        return await user.insert(args)
     }
-
     async select(event, args) {
-        let users = await knex('users')
-        return users
+        return await user.list()
     }
-
-    async update(event, args) {
-        let res = await knex('users')
-            .where('id', '=', args.userId)
-            .update(args.data)
-            .decrement({
-                balance: 50,
-            }).clearCounters()
-        return res ? res : false
+    async updateSuper(event, args) {
+        return await user.update({id: args.id}, {super: args.value})
+    }
+    async updateStatus(event, args) {
+        return await user.update({id: args.id}, {status: args.value})
     }
 }
 

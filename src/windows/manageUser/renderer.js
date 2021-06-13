@@ -11,3 +11,4 @@ btn_insertUser.onclick = () => {
     btn_insertUser.parentNode.classList.add('active')
     btn_managerUser.parentNode.classList.remove('active')
 }
+

@@ -10,7 +10,6 @@ module.exports = (createWindow) => {
             .setMaximizable(false)
             .setResizable(false)
             .setCenter(true)
-            .setdDevTools(false)
             .run()
 
         app.on('activate', function () {
@@ -22,7 +21,6 @@ module.exports = (createWindow) => {
                     .setMaximizable(false)
                     .setResizable(false)
                     .setCenter(true)
-                    .setdDevTools(false)
                     .run()
             }
         })
