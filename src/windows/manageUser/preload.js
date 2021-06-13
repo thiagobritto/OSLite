@@ -3,10 +3,12 @@ const { ipcRenderer } = require('electron')
 
 const ejs = require('ejs')
 const path = require('path')
+let dataNow;
 
 window.addEventListener('DOMContentLoaded', () => {
     getData().then( data => {
-        document.getElementById('managerUser').onclick = () => managerPage(data)
+        dataNow = data
+        document.getElementById('managerUser').onclick = () => managerPage(dataNow)
         document.getElementById('newUser').onclick = insertPage
         insertPage()
     })
@@ -42,7 +44,7 @@ function setInsertUser(){
 
             ipcRenderer.invoke('insertUser', data).then( res => {
                 if (res[0] == undefined) throw 'Usuário já cadastrado!';
-                console.log('cadastrado...');
+                document.location.reload(true)
             }).catch(err => {
                 console.log(err);
             });
@@ -60,19 +62,21 @@ function managerPage(appData, init = 0, end = 5){
         document.getElementById('manager').innerHTML = data
     })
     
-    setManageUser('setSuper', 'super')
-    setManageUser('setStatus', 'status')
+    editUser()
 
     let [...pageInd] = document.getElementsByClassName('page')
     pageInd.map(ind => {
         ind.onclick = () => {
             managerPage(
-                appData,
+                dataNow,
                 Number.parseInt(ind.getAttribute('data-init')),
                 Number.parseInt(ind.getAttribute('data-end'))
             )
         }
     })
+
+    setManageUser('setSuper', 'super')
+    setManageUser('setStatus', 'status')
 }
 
 function setManageUser(inv, btn) {
@@ -83,11 +87,29 @@ function setManageUser(inv, btn) {
             let value = this.getAttribute(`data-${btn}`)
             
             ipcRenderer.invoke(inv, {id, value}).then( results => {
-                //console.log(results);
                 getData().then( data => {
-                    managerPage(data)  
+                    dataNow = data
+                    managerPage(dataNow)  
                 })
             })    
         }
     })
+}
+
+function editUser(){
+    let file = path.join(__dirname,'views/editUser.ejs')
+    
+    let [...btn_edit] = document.getElementsByClassName('edit-user')
+    btn_edit.forEach( element => {
+        element.onclick = () => {
+            dataNow.forEach( dataUser => {
+                if (element.getAttribute('data-id') == dataUser.id){
+                    ejs.renderFile( file, { dataUser }, (err, data ) => {
+                        document.getElementById('manager').innerHTML = data
+                    })
+                }
+            })
+        }
+    })
+
 }

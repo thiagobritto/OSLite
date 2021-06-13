@@ -10,6 +10,7 @@ class UserController {
         for (let key in appData) UserController[key] = appData[key]
     }
     async insert(event, args) {
+        args.password = await passwordHash(args.password)
         return await user.insert(args)
     }
     async select(event, args) {

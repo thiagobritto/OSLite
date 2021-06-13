@@ -1,0 +1,60 @@
+
+<div class="row">
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="id_user" type="text" class="validate" maxlength="16" value="<%=dataUser.userName%>">
+                <label class="active" for="id_user">Usuário</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="id_pass" type="password" class="validate" maxlength="16" value="<%=dataUser.password%>">
+                <label class="active" for="id_pass">Nova Senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="id_pass_conf" type="password" class="validate" maxlength="16" value="<%=dataUser.password%>">
+                <label class="active" for="id_pass_conf">Confirmar nova senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <p>
+                    <label>
+                        <% if (dataUser.status > 0) { %>
+                            <input id="id_active" type="checkbox" checked="checked" />
+                        <% } else { %>
+                            <input id="id_active" type="checkbox" />
+                        <% } %>
+                        <span>Ativar as permições de usuário?</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-field col s6">
+                <p>
+                    <label>
+                        <% if (dataUser.super > 0) { %>
+                            <input id="id_admin" type="checkbox" checked="checked" />
+                        <% } else { %>
+                            <input id="id_admin" type="checkbox" />
+                        <% } %>
+                        <span>Usuário Adminitrador?</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <button id="efitar" class="waves-effect waves-light btn grey darken-4">
+                    Atualizar
+                </button>
+                <a href="javascript:window.close()" class="waves-effect waves-light btn grey darken-4">
+                    Voltar
+                </a>
+            </div>
+        </div>
+
+    </form>
+</div>

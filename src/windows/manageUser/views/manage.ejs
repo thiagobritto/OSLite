@@ -23,7 +23,7 @@
                     <% } else { %>
                         <td><a href="#"><i data-status="1" data-status-id="<%=appData[i].id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
                     <% } %>
-                    <td><a href="#"><i class="material-icons blue-text">edit</i></a></td>
+                    <td><a href="#" class="edit-user" data-id="<%=appData[i].id%>"><i class="material-icons blue-text">edit</i></a></td>
                 </tr>
             <% } catch(err) { %>
                 <%break;%>
