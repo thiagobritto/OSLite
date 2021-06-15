@@ -9,13 +9,13 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="id_pass" type="password" class="validate" maxlength="16" value="<%=dataUser.password%>">
+                <input id="id_pass" type="password" class="validate" maxlength="16" value="<%=dataUser.password.substr(0,16)%>">
                 <label class="active" for="id_pass">Nova Senha</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="id_pass_conf" type="password" class="validate" maxlength="16" value="<%=dataUser.password%>">
+                <input id="id_pass_conf" type="password" class="validate" maxlength="16" value="<%=dataUser.password.substr(0,16)%>">
                 <label class="active" for="id_pass_conf">Confirmar nova senha</label>
             </div>
         </div>

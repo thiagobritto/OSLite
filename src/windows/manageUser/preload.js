@@ -62,7 +62,7 @@ function managerPage(appData, init = 0, end = 5){
         document.getElementById('manager').innerHTML = data
     })
     
-    editUser()
+    editPage()
 
     let [...pageInd] = document.getElementsByClassName('page')
     pageInd.map(ind => {
@@ -96,20 +96,57 @@ function setManageUser(inv, btn) {
     })
 }
 
-function editUser(){
-    let file = path.join(__dirname,'views/editUser.ejs')
-    
-    let [...btn_edit] = document.getElementsByClassName('edit-user')
+function editPage(){
+    let file = path.join(__dirname,'views/editUser.ejs');
+    let [...btn_edit] = document.getElementsByClassName('edit-user');
+    let userDataEdit;
+
     btn_edit.forEach( element => {
         element.onclick = () => {
             dataNow.forEach( dataUser => {
                 if (element.getAttribute('data-id') == dataUser.id){
+                    userDataEdit = dataUser;
                     ejs.renderFile( file, { dataUser }, (err, data ) => {
                         document.getElementById('manager').innerHTML = data
+                        setEditUser(dataUser)
                     })
                 }
             })
         }
     })
+    
+}
 
+function setEditUser(dataUser){
+    document.getElementById('efitar').onclick = (e) => {
+        e.preventDefault()
+        try{
+            let data = {
+                userName: document.getElementById('id_user').value,
+                super: document.getElementById('id_admin').checked ? 1 : 0,
+                status: document.getElementById('id_active').checked ? 1 : 0
+            };
+            
+            for (let k in data) if (data[k] === '') throw 'Preencha totos os campos';
+
+            if(document.getElementById('id_pass').value != document.getElementById('id_pass_conf').value)
+                throw 'As senhas não batem!';
+
+            if (dataUser.password.substr(0,16) != document.getElementById('id_pass').value){
+                data.password = document.getElementById('id_pass').value
+            }
+
+            ipcRenderer.invoke('updateUser', { id: dataUser.id, data }).then( res => {
+                getData().then( data => {
+                    dataNow = data
+                    managerPage(dataNow)  
+                })
+            }).catch(err => {
+                console.log(err);
+            });
+
+        } catch(err){
+            console.log(err);
+        }
+    }
 }

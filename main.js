@@ -28,4 +28,6 @@ ipcMain.on('manageUser', dash.manageUser)
 ipcMain.handle('getDataUsers', user.select)
 ipcMain.handle('setSuper', user.updateSuper)
 ipcMain.handle('setStatus', user.updateStatus)
+ipcMain.handle('updateUser', user.updateUser)
 ipcMain.handle('insertUser', user.insert)
+//updateUser
