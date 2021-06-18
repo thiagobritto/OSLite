@@ -1,7 +1,7 @@
 
 const { app } = require('electron')
 
-module.exports = (createWindow) => {
+module.exports = ( createWindow ) => {
     app.whenReady().then(() => {
         createWindow()
             .setWidth(350)

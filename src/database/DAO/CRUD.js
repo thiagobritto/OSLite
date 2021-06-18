@@ -1,5 +1,5 @@
 
-const database = require('./index')
+const database = require('../index')
 
 class CRUD{
     constructor(table){

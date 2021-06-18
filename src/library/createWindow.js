@@ -9,7 +9,7 @@ class MainWindow {
         this.width = 800
         this.height = 600
         this.title = 'OSLite'
-        this.icon = dirname + "icon_dark.png"
+        this.icon = dirname + "icon.png"
         this.autoHideMenuBar = true
         this.webPreferences = {}
     }
@@ -55,7 +55,7 @@ class MainWindow {
         return this
     }
     setPreload(preload){
-        this.webPreferences.preload = path.join(dirname, `src/windows/${preload}/preload.js`)
+        this.webPreferences.preload = path.join(dirname, `public/windows/${preload}/preload.js`)
         return this
     }
     // main
@@ -69,9 +69,8 @@ class MainWindow {
         
         if (setCall) setCall(mainWindow[pageWindow], this)
         
-        mainWindow[pageWindow].loadURL(`file://${dirname}/src/windows/${pageWindow}/index.html`)
-        mainWindow[pageWindow].once("ready-to-show", () => { mainWindow[pageWindow].show() })
-        //console.log(this);
+        mainWindow[pageWindow].loadURL(`file://${dirname}/public/windows/${pageWindow}/index.html`);
+        mainWindow[pageWindow].once("ready-to-show", () => { mainWindow[pageWindow].show() });
     }
 }
 

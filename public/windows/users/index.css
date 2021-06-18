@@ -19,6 +19,7 @@ nav{
 
 #pagination{
     position: fixed;
+    left: 0;
     width: 100%;
     bottom: 80px;
 }
