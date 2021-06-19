@@ -1,20 +1,21 @@
 
-const user = require('../database/CRUD')('users')
-const { passwordHash } = require('../library/emcryptDecript')
+const { passwordHash } = require('../library/emcryptDecript');
+const usersDAO = require('../database/DAO/usersDAO')('users');
 
-// select * from table  limit 0, 5;
+class UsersController {
 
-class UserController {
-
-    constructor(appData) {
-        for (let key in appData) UserController[key] = appData[key]
+    constructor(mainWindow, createWindow) {
+        UsersController.mainWindow = mainWindow;
+        UsersController.createWindow = createWindow;
     }
+
+    async getDataUsers(event, args) {
+        return await usersDAO.selectUsers();
+    }
+    /*
     async insert(event, args) {
         args.password = await passwordHash(args.password)
         return await user.insert(args)
-    }
-    async select(event, args) {
-        return await user.list()
     }
     async updateSuper(event, args) {
         return await user.update({id: args.id}, {super: args.value})
@@ -26,6 +27,7 @@ class UserController {
         if (args.data.password) args.data.password = await passwordHash(args.data.password)
         return await user.update({id: args.id}, args.data)
     }
+    */
 }
 
-module.exports = (appData = {}) => new UserController(appData)
+module.exports = (mainWindow, createWindow) => new UsersController(mainWindow, createWindow);

@@ -1,13 +1,17 @@
 
-const database = require('../index')
+const database = require('../index');
 
 class UsersDAO{
     constructor( tableNane ){
         this.tableNane = tableNane;
     }
 
-    async selectUserLogin(where){
-        return await database.select().table(this.tableNane).where(where);
+    selectUser(where){
+        return database.select().table(this.tableNane).where(where);
+    }
+
+    selectUsers(){
+        return database.select().table(this.tableNane);
     }
 }
 

@@ -1,34 +1,39 @@
 
 const { ipcRenderer } = require('electron')
 
-const ejs = require('ejs')
-const path = require('path')
-let dataNow;
+const ejs = require('ejs');
+const path = require('path');
 
-window.addEventListener('DOMContentLoaded', () => {
-    getData().then( data => {
-        dataNow = data
-        document.getElementById('managerUser').onclick = () => managerPage(dataNow)
-        document.getElementById('newUser').onclick = insertPage
-        insertPage()
-    })
-})
+let dataUsers;
 
-async function getData(){
-    return await ipcRenderer.invoke('getDataUsers')
-}
+window.addEventListener('DOMContentLoaded', async () => {
+    dataUsers = await ipcRenderer.invoke('getDataUsers');
+    document.getElementById('newUser').onclick = insertPage;
+    document.getElementById('managerUsers').onclick = () => managerPage(dataUsers);
+    insertPage();
+});
 
-function insertPage(){
-    let file = path.join(__dirname,'views/insert.ejs')
+function insertPage()
+{
+    let file = path.join(__dirname,'views/insert.ejs');
     ejs.renderFile( file, {}, (err, data ) => {
-        document.getElementById('manager').innerHTML = data
+        document.getElementById('manager').innerHTML = data;
     })
-    setInsertUser()
+    setPageInsertUser();
 }
 
-function setInsertUser(){
+function managerPage(dataUsersParams)
+{
+    let file = path.join(__dirname,'views/manage.ejs')
+    ejs.renderFile( file, {dataUsersParams}, (err, data ) => {
+        document.getElementById('manager').innerHTML = data
+    });
+}
+
+function setPageInsertUser()
+{
     document.getElementById('cadastrar').onclick = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try{
             let data = {
                 username: document.getElementById('id_user').value,
@@ -37,14 +42,15 @@ function setInsertUser(){
                 status: document.getElementById('id_active').checked ? 1 : 0
             };
             
-            for (let k in data) if (data[k] === '') throw 'Preencha totos os campos';
+            for (let k in data) if (data[k] === '') 
+            throw 'Preencha totos os campos';
 
             if(data.password != document.getElementById('id_pass_conf').value)
-            throw 'As senha não batem!';
+            throw 'As senhas não batem!';
 
             ipcRenderer.invoke('insertUser', data).then( res => {
                 if (res[0] == undefined) throw 'Usuário já cadastrado!';
-                document.location.reload(true)
+                document.location.reload(true);
             }).catch(err => {
                 console.log(err);
             });
@@ -55,44 +61,24 @@ function setInsertUser(){
     }
 }
 
-function managerPage(appData, init = 0, end = 5){
-
-    let file = path.join(__dirname,'views/manage.ejs')
-    ejs.renderFile( file, {appData, init, end}, (err, data ) => {
-        document.getElementById('manager').innerHTML = data
-    })
+function setPaginationManagePage(){
+    let [...pageInd] = document.getElementsByClassName('page');
     
-    editPage()
-
-    let [...pageInd] = document.getElementsByClassName('page')
     pageInd.map(ind => {
         ind.onclick = () => {
             managerPage(
-                dataNow,
+                dataUsers,
                 Number.parseInt(ind.getAttribute('data-init')),
                 Number.parseInt(ind.getAttribute('data-end'))
-            )
+            );
         }
-    })
-
-    setManageUser('setSuper', 'super')
-    setManageUser('setStatus', 'status')
+    });
 }
 
-function setManageUser(inv, btn) {
-    let [...elements] = document.getElementsByClassName(btn)
+function setManageSuperStatus(btn, btnCall) {
+    let [...elements] = document.getElementsByClassName(btn);
     elements.map( btn_elements => {
-        btn_elements.onclick = function () {
-            let id = this.getAttribute(`data-${btn}-id`)
-            let value = this.getAttribute(`data-${btn}`)
-            
-            ipcRenderer.invoke(inv, {id, value}).then( results => {
-                getData().then( data => {
-                    dataNow = data
-                    managerPage(dataNow)  
-                })
-            })    
-        }
+        btn_elements.onclick = () => btnCall(btn_elements);
     })
 }
 
@@ -137,7 +123,7 @@ function setEditUser(dataUser){
             }
 
             ipcRenderer.invoke('updateUser', { id: dataUser.id, data }).then( res => {
-                getData().then( data => {
+                getDataUsers().then( data => {
                     dataNow = data
                     managerPage(dataNow)  
                 })

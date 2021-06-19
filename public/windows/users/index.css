@@ -2,11 +2,12 @@
 @charset 'utf-8';
 
 nav{
+    position: fixed;
     background-color: var(--backColorHeader);
 }
 
 .body_insert{
-    padding-top: 20px;
+    padding-top: 75px;
 }
 
 #manager table tr td, #manager table tr th{
@@ -17,9 +18,3 @@ nav{
     text-align: left !important;
 }
 
-#pagination{
-    position: fixed;
-    left: 0;
-    width: 100%;
-    bottom: 80px;
-}
