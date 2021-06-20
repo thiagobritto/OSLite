@@ -17,6 +17,7 @@ ipcMain.on('openManageUsers', dash.openManageUsers);
 ipcMain.on('logout', dash.logout);
 
 ipcMain.handle('getDataUsers', users.getDataUsers);
+ipcMain.handle('insertNewUser', users.insertNewUser);
 
 
 /*
@@ -26,6 +27,5 @@ ipcMain.handle('getDataUsers', users.getDataUsers);
 ipcMain.handle('setSuper', user.updateSuper)
 ipcMain.handle('setStatus', user.updateStatus)
 ipcMain.handle('updateUser', user.updateUser)
-ipcMain.handle('insertUser', user.insert)
 //updateUser
 */

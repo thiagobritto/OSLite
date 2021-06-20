@@ -11,7 +11,11 @@ class UsersDAO{
     }
 
     selectUsers(){
-        return database.select().table(this.tableNane);
+        return database.select().table(this.tableNane); 
+    }
+
+    insert(data) {
+        return database.insert(data).into(this.tableNane);
     }
 }
 

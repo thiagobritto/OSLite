@@ -20,6 +20,7 @@ function insertPage()
         document.getElementById('manager').innerHTML = data;
     })
     setPageInsertUser();
+    clearMsg();
 }
 
 function managerPage(dataUsersParams)
@@ -28,6 +29,7 @@ function managerPage(dataUsersParams)
     ejs.renderFile( file, {dataUsersParams}, (err, data ) => {
         document.getElementById('manager').innerHTML = data
     });
+    clearMsg();
 }
 
 function setPageInsertUser()
@@ -46,21 +48,25 @@ function setPageInsertUser()
             throw 'Preencha totos os campos';
 
             if(data.password != document.getElementById('id_pass_conf').value)
-            throw 'As senhas não batem!';
+            throw 'As senhas divergem!';
 
-            ipcRenderer.invoke('insertUser', data).then( res => {
-                if (res[0] == undefined) throw 'Usuário já cadastrado!';
-                document.location.reload(true);
-            }).catch(err => {
-                console.log(err);
-            });
+            ipcRenderer.invoke('insertNewUser', data).then( res => {
+                if (!res.status) {
+                    msgError(`${res.error}, tente outro nome.`);
+                } else {
+                    ipcRenderer.invoke('getDataUsers').then(data => {
+                        dataUsers = data;
+                        msgSucesso(`Usuario cadastrado com sucesso!`);
+                    });
+                }
+            })
 
         } catch(err){
-            console.log(err);
+            msgError(err);
         }
     }
 }
-
+// aqui ...
 function setPaginationManagePage(){
     let [...pageInd] = document.getElementsByClassName('page');
     
@@ -135,4 +141,25 @@ function setEditUser(dataUser){
             console.log(err);
         }
     }
+}
+
+function msgError(params){
+    let errorShow = document.getElementById('error');
+    errorShow.innerText = params;
+    errorShow.style.color = 'red';
+    errorShow.classList.add('errorShow');
+}
+
+function msgSucesso(params){
+    let errorShow = document.getElementById('error');
+    errorShow.innerText = params;
+    errorShow.style.color = 'blue';
+    errorShow.classList.add('errorShow');
+}
+
+function clearMsg(){
+    let errorShow = document.getElementById('error');
+    errorShow.innerText = '';
+    errorShow.style.color = 'red';
+    errorShow.classList.remove('errorShow');
 }

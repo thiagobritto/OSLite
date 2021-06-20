@@ -3,10 +3,14 @@
 
 nav{
     position: fixed;
+    left: 0;
+    top: 0;
     background-color: var(--backColorHeader);
+    z-index: 1;
 }
 
-.body_insert{
+body{
+    position: relative;
     padding-top: 75px;
 }
 
@@ -18,3 +22,22 @@ nav{
     text-align: left !important;
 }
 
+#error {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 5px 15px;
+    text-align: center;
+    color: red;
+    background-color: lightcyan;
+    border: 3px solid cyan;
+    border-radius: 5px;
+    z-index: 0;
+    transition: transform 0.5s;
+}
+
+.errorShow{
+    transform: translate(-50%, 50px) !important;
+}

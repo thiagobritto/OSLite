@@ -9,8 +9,25 @@ class UsersController {
         UsersController.createWindow = createWindow;
     }
 
-    async getDataUsers(event, args) {
-        return await usersDAO.selectUsers();
+    getDataUsers(event, args) {
+        return usersDAO.selectUsers();
+    }
+
+    async insertNewUser(event, args){
+        try{
+            if (args.password) args.password = await passwordHash(args.password);
+            let results = await usersDAO.insert(args);
+            return {
+                id: results,
+                status: true
+            }
+        } catch (err){
+            return {
+                error: 'Erro ao tentar inserir o usuário!',
+                errorMessage: err.message,
+                status: false
+            }
+        }
     }
     /*
     async insert(event, args) {

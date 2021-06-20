@@ -1,5 +1,5 @@
 
-let btn_managerUser = document.getElementById('managerUser')
+let btn_managerUser = document.getElementById('managerUsers');
 let btn_insertUser = document.getElementById('newUser')
 
 btn_managerUser.onclick = () => {
