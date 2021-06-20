@@ -17,6 +17,10 @@ class UsersDAO{
     insert(data) {
         return database.insert(data).into(this.tableNane);
     }
+
+    update(where, updateData){
+        return database.where(where).update(updateData).table(this.tableNane);
+    }
 }
 
 module.exports = ( tableNane ) => new UsersDAO( tableNane )

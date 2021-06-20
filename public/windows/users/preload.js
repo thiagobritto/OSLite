@@ -3,6 +3,7 @@ const { ipcRenderer } = require('electron')
 
 const ejs = require('ejs');
 const path = require('path');
+const { runInThisContext } = require('vm');
 
 let dataUsers;
 
@@ -18,17 +19,8 @@ function insertPage()
     let file = path.join(__dirname,'views/insert.ejs');
     ejs.renderFile( file, {}, (err, data ) => {
         document.getElementById('manager').innerHTML = data;
-    })
-    setPageInsertUser();
-    clearMsg();
-}
-
-function managerPage(dataUsersParams)
-{
-    let file = path.join(__dirname,'views/manage.ejs')
-    ejs.renderFile( file, {dataUsersParams}, (err, data ) => {
-        document.getElementById('manager').innerHTML = data
     });
+    setPageInsertUser();
     clearMsg();
 }
 
@@ -54,9 +46,9 @@ function setPageInsertUser()
                 if (!res.status) {
                     msgError(`${res.error}, tente outro nome.`);
                 } else {
-                    ipcRenderer.invoke('getDataUsers').then(data => {
+                    ipcRenderer.invoke('getDataUsers').then( data => {
                         dataUsers = data;
-                        msgSucesso(`Usuario cadastrado com sucesso!`);
+                        msgSucess(`Usuario cadastrado com sucesso!`);
                     });
                 }
             })
@@ -66,82 +58,117 @@ function setPageInsertUser()
         }
     }
 }
-// aqui ...
-function setPaginationManagePage(){
-    let [...pageInd] = document.getElementsByClassName('page');
-    
-    pageInd.map(ind => {
-        ind.onclick = () => {
-            managerPage(
-                dataUsers,
-                Number.parseInt(ind.getAttribute('data-init')),
-                Number.parseInt(ind.getAttribute('data-end'))
-            );
+
+function managerPage(dataUsersParams)
+{
+    let file = path.join(__dirname,'views/manage.ejs')
+    ejs.renderFile( file, {dataUsersParams}, (err, data ) => {
+        document.getElementById('manager').innerHTML = data
+    });
+    setPageManageUser();
+    clearMsg();
+}
+
+function setPageManageUser(){
+    let [...btn_super] = document.getElementsByClassName('super');
+    btnUpdateData(btn_super, btn => {
+        return {
+            id: btn.getAttribute('data-super-id'),
+            data: {
+                super: btn.getAttribute('data-super')
+            }
+        }
+    });
+
+    let [...btn_status] = document.getElementsByClassName('status');
+    btnUpdateData(btn_status, btn => {
+        return {
+            id: btn.getAttribute('data-status-id'),
+            data: {
+                status: btn.getAttribute('data-status')
+            }
+        }
+    });
+
+    let [...btn_edit] = document.getElementsByClassName('edit-user');
+    btnEditData(btn_edit);
+}
+
+function btnUpdateData(btn, call){
+    btn.forEach( element => {
+        element.onclick = function(){
+            let data = call(this);
+            ipcRenderer.invoke('updateUser', data).then( dataRes => {
+                if (!dataRes.status) {
+                    msgError(`${dataRes.error}`);
+                } else {
+                    ipcRenderer.invoke('getDataUsers').then( data => {
+                        dataUsers = data;
+                        managerPage(dataUsers);
+                    });
+                }
+            });
         }
     });
 }
 
-function setManageSuperStatus(btn, btnCall) {
-    let [...elements] = document.getElementsByClassName(btn);
-    elements.map( btn_elements => {
-        btn_elements.onclick = () => btnCall(btn_elements);
-    })
-}
-
-function editPage(){
-    let file = path.join(__dirname,'views/editUser.ejs');
-    let [...btn_edit] = document.getElementsByClassName('edit-user');
-    let userDataEdit;
-
-    btn_edit.forEach( element => {
-        element.onclick = () => {
-            dataNow.forEach( dataUser => {
-                if (element.getAttribute('data-id') == dataUser.id){
-                    userDataEdit = dataUser;
-                    ejs.renderFile( file, { dataUser }, (err, data ) => {
-                        document.getElementById('manager').innerHTML = data
-                        setEditUser(dataUser)
-                    })
-                }
+function btnEditData(btn){
+    btn.forEach( element => {
+        element.onclick = function(){
+            dataUsers.forEach( data => {
+                if (data.id == this.getAttribute('data-id')) editPage(data);
             })
         }
-    })
-    
+    });
 }
 
-function setEditUser(dataUser){
+function editPage(dataUser){
+    let file = path.join(__dirname,'views/editUser.ejs');
+    ejs.renderFile( file, { dataUser }, (err, data ) => {
+        document.getElementById('manager').innerHTML = data;
+    });
+    setPageEdittUser(dataUser);
+}
+
+function setPageEdittUser(dataUser){
     document.getElementById('efitar').onclick = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try{
             let data = {
-                userName: document.getElementById('id_user').value,
-                super: document.getElementById('id_admin').checked ? 1 : 0,
-                status: document.getElementById('id_active').checked ? 1 : 0
+                id: dataUser.id,
+                data: {
+                    password: document.getElementById('id_pass').value,
+                    super: document.getElementById('id_admin').checked ? 1 : 0,
+                    status: document.getElementById('id_active').checked ? 1 : 0
+                }
             };
             
-            for (let k in data) if (data[k] === '') throw 'Preencha totos os campos';
+            for (let k in data.data) if (data.data[k] === '') 
+            throw 'Preencha totos os campos';
 
-            if(document.getElementById('id_pass').value != document.getElementById('id_pass_conf').value)
-                throw 'As senhas não batem!';
+            if(data.data.password != document.getElementById('id_pass_conf').value)
+            throw 'As senhas divergem!';
 
-            if (dataUser.password.substr(0,16) != document.getElementById('id_pass').value){
-                data.password = document.getElementById('id_pass').value
-            }
-
-            ipcRenderer.invoke('updateUser', { id: dataUser.id, data }).then( res => {
-                getDataUsers().then( data => {
-                    dataNow = data
-                    managerPage(dataNow)  
-                })
-            }).catch(err => {
-                console.log(err);
+            if(data.data.password === dataUser.password.substr(0,16)) delete data.data.password;    
+            
+            ipcRenderer.invoke('updateUser', data).then( dataRes => {
+                if (!dataRes.status) {
+                    msgError(`${dataRes.error}`);
+                } else {
+                    ipcRenderer.invoke('getDataUsers').then( data => {
+                        dataUsers = data;
+                        managerPage(dataUsers);
+                    });
+                }
             });
 
         } catch(err){
-            console.log(err);
+            msgError(err);
         }
     }
 }
+
+/////////////////////////////////////
 
 function msgError(params){
     let errorShow = document.getElementById('error');
@@ -150,7 +177,7 @@ function msgError(params){
     errorShow.classList.add('errorShow');
 }
 
-function msgSucesso(params){
+function msgSucess(params){
     let errorShow = document.getElementById('error');
     errorShow.innerText = params;
     errorShow.style.color = 'blue';

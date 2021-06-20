@@ -29,11 +29,23 @@ class UsersController {
             }
         }
     }
-    /*
-    async insert(event, args) {
-        args.password = await passwordHash(args.password)
-        return await user.insert(args)
+    async updateUser(event, args) {
+        try {
+            if (args.data.password) args.data.password = await passwordHash(args.data.password);
+            let results = await usersDAO.update({id:args.id}, args.data);
+            return {
+                rows: results,
+                status: true
+            }
+        } catch (err) {
+            return {
+                error: 'Erro ao tentar atualizar cadastro!',
+                errorMessage: err.message,
+                status: false
+            }
+        }
     }
+    /*
     async updateSuper(event, args) {
         return await user.update({id: args.id}, {super: args.value})
     }
