@@ -10,18 +10,6 @@ exports.seed = function(knex) {
           password: '$2b$12$tLDR6WRn3.VbQ4DZfWlWa.pr/sdlK98mtdmWbHRzXfuuUu3y.VtYO',
           status: 1,
           super: 1
-        },
-        {
-          username: 'user',
-          password: '$2b$12$tLDR6WRn3.VbQ4DZfWlWa.pr/sdlK98mtdmWbHRzXfuuUu3y.VtYO',
-          status: 1,
-          super: 0
-        },
-        {
-          username: 'userNot',
-          password: '$2b$12$tLDR6WRn3.VbQ4DZfWlWa.pr/sdlK98mtdmWbHRzXfuuUu3y.VtYO',
-          status: 0,
-          super: 0
         }
       ]);
     });

@@ -166,9 +166,8 @@ function setPageEdittUser(dataUser){
             msgError(err);
         }
     }
+    document.getElementById('voltar').onclick = () => managerPage(dataUsers);
 }
-
-/////////////////////////////////////
 
 function msgError(params){
     let errorShow = document.getElementById('error');
