@@ -45,18 +45,7 @@ class UsersController {
             }
         }
     }
-    /*
-    async updateSuper(event, args) {
-        return await user.update({id: args.id}, {super: args.value})
-    }
-    async updateStatus(event, args) {
-        return await user.update({id: args.id}, {status: args.value})
-    }
-    async updateUser(event, args){
-        if (args.data.password) args.data.password = await passwordHash(args.data.password)
-        return await user.update({id: args.id}, args.data)
-    }
-    */
+    
 }
 
 module.exports = (mainWindow, createWindow) => new UsersController(mainWindow, createWindow);

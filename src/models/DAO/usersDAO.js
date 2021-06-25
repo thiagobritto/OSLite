@@ -1,5 +1,5 @@
 
-const database = require('../index');
+const database = require('../../database');
 
 class UsersDAO{
     constructor( tableNane ){

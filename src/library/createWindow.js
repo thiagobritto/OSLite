@@ -1,91 +1,43 @@
-const { BrowserWindow } = require('electron')
+
+const { app, BrowserWindow } = require('electron');
 const path = require('path')
-const dirname = path.join(__dirname, '../../')
 
-var mainWindow = {}
+var win = {};
 
-class MainWindow {
-    constructor() {
-        this.width = 800
-        this.height = 600
-        this.title = 'OSLite'
-        this.icon = dirname + "icon.png"
-        this.autoHideMenuBar = true
-        this.webPreferences = {}
-    }
-    setWidth(width) {
-        this.width = width
-        return this
-    }
-    setHeight(height) {
-        this.height = height
-        return this
-    }
-    setTitle(title) {
-        this.title = title
-        return this
-    }
-    setParent(parent){
-        this.parent = parent
-        return this
-    }
-    setModal(modal){
-        this.modal = modal
-        return this
-    }
-    setShow(show){
-        this.show = show
-        return this
-    }
-    setResizable(resizable){
-        this.resizable = resizable
-        return this
-    }
-    setMaximizable(maximizable){
-        this.maximizable = maximizable
-        return this
-    }
-    setCenter(center){
-        this.center = center
-        return this
-    }
-    // webPreferences
-    setDevTools(devTools){
-        this.webPreferences.devTools = devTools
-        return this
-    }
-    setPreload(preload){
-        this.webPreferences.preload = path.join(dirname, `public/windows/${preload}/preload.js`)
-        return this
-    }
-    // main
-    run(pageName, setCall) 
-    {
-        let pageWindow = pageName ? pageName : 'login'
-
-        this.setPreload(pageWindow)
-        
-        mainWindow[pageWindow] = new BrowserWindow(this)
-        
-        if (setCall) setCall(mainWindow[pageWindow], this)
-        
-        mainWindow[pageWindow].loadURL(`file://${dirname}/public/windows/${pageWindow}/index.html`);
-        mainWindow[pageWindow].once("ready-to-show", () => { mainWindow[pageWindow].show() });
-    }
-}
-
-function createWindow() {
-    return new MainWindow()
-}
-
-module.exports = { mainWindow, createWindow }
-
-/*
-    function isEmpty(obj)
-    {
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop)) return false
+function createWindow(winName, winProps = {}){
+    win[winName] = new BrowserWindow({
+        width: winProps.width ? winProps.width : 800,
+        height: winProps.height ? winProps.height : 600,
+        title: winProps.title ? winProps.title : 'OSLite',
+        parent: winProps.parent ? winProps.parent : null,
+        modal: winProps.modal ? winProps.modal : false,
+        maximizable: winProps.maximizable === false ? winProps.maximizable : true,
+        resizable: winProps.resizable === false ? winProps.resizable : true,
+        center: winProps.center === false ? winProps.center : true,
+        icon: "icon.png",
+        autoHideMenuBar: true,
+        webPreferences: {
+            devTools: winProps.devTools === false ? winProps.devTools : true,
+            preload: path.join(__dirname,`../../public/windows/${winName}/preload.js`)
         }
-        return JSON.stringify(obj) === JSON.stringify({});
-    }
-*/
+    })
+    win[winName].loadFile(path.join(__dirname,`../../public/windows/${winName}/index.html`))
+    win[winName].webContents.openDevTools()
+}
+
+function startApp(){
+    app.whenReady().then(() => {
+        createWindow('login', { width: 380, height: 300, maximizable: false, resizable: false })
+        app.on('activate', function () {
+            if (BrowserWindow.getAllWindows().length === 0) {
+                createWindow('login', { width: 380, height: 300, maximizable: false, resizable: false })
+            }
+        })
+    })
+    
+    app.on('window-all-closed', function () {
+        if (process.platform !== 'darwin') app.quit()
+    })
+}
+
+module.exports = { win, createWindow, startApp };

@@ -1,31 +1,15 @@
 
-const { ipcMain } = require('electron');
+const { ipcMain  } = require('electron')
+const { startApp } = require('./src/library/createWindow')
 
-const { mainWindow, createWindow } = require( './src/library/createWindow' );
-require('./appStart')( createWindow );
+startApp();
 
-const login = require('./src/controllers/loginController')();
-const dash = require('./src/controllers/dashController')(mainWindow, createWindow);
-const users = require('./src/controllers/usersController')(mainWindow, createWindow);
+// CODE ...
 
+const main = require('./src/controllers/mainController')()
 
-ipcMain.handle('login', login.login);
-
-ipcMain.on('openDashboard', dash.openDashboard);
-ipcMain.on('checkPermisions', dash.checkPermisions);
-ipcMain.on('openManageUsers', dash.openManageUsers);
-ipcMain.on('logout', dash.logout);
-
-ipcMain.handle('getDataUsers', users.getDataUsers);
-ipcMain.handle('insertNewUser', users.insertNewUser);
-ipcMain.handle('updateUser', users.updateUser);
-
-
-/*
-
-
-
-ipcMain.handle('setStatus', user.updateStatus)
-ipcMain.handle('updateUser', user.updateUser)
-//updateUser
-*/
+ipcMain.on('createWindow', main.createWin)
+ipcMain.on('createWindowParent', main.createWindowParent)
+ipcMain.on('closeWindow', main.closeWindow)
+ipcMain.on('getDataUser', main.getDataUser)
+ipcMain.on('fullScreen', main.fullScreen)

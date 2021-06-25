@@ -1,6 +1,4 @@
 
-const { ipcRenderer } = require('electron')
-
 // event dom
 window.addEventListener('DOMContentLoaded', () => {
     
@@ -14,7 +12,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     
     document.getElementById('cad_user').onclick = () => ipcRenderer.send('openManageUsers');
-    
+
+    function test(){
+        console.log('test');
+    }
+
 })
 
 // functions

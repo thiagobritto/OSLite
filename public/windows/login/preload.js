@@ -1,11 +1,26 @@
 
-const { ipcRenderer } = require('electron');
+const login = require('../../../src/controllers/loginController')()
+
 require('../../dists/materialize/js/materialize');
 
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('entrar').onclick = (e) => {
     e.preventDefault();
-    try{
+    login.sigin({
+      user: document.getElementById('name').value,
+      pass: document.getElementById('pass').value
+    }).catch(err => {
+      msgError(err);
+    })
+  }
+});
+
+function msgError(msg){
+  M.toast({html: msg});
+}
+
+/*
+try{
       let userLogin = {
         user: login.name.value ? login.name.value : nameNull(),
         pass: login.pass.value ? login.pass.value : passNull()
@@ -21,19 +36,4 @@ window.addEventListener('DOMContentLoaded', () => {
     }catch(err){
       valueError(err);
     }
-  }
-});
-
-// functions
-
-function nameNull(){
-  throw 'Usuário não preenchido!';
-}
-
-function passNull(){
-  throw 'Senha não preenchida!';
-}
-
-function valueError(msg){
-  M.toast({html: msg});
-}
+*/

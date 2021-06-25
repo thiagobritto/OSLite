@@ -3,7 +3,6 @@ const { ipcRenderer } = require('electron')
 
 const ejs = require('ejs');
 const path = require('path');
-const { runInThisContext } = require('vm');
 
 let dataUsers;
 
@@ -137,19 +136,19 @@ function setPageEdittUser(dataUser){
             let data = {
                 id: dataUser.id,
                 data: {
-                    password: document.getElementById('id_pass').value,
                     super: document.getElementById('id_admin').checked ? 1 : 0,
                     status: document.getElementById('id_active').checked ? 1 : 0
                 }
             };
+
+            if(document.getElementById('id_pass').value != dataUser.password.substr(0,16)) 
+                data.data.password = document.getElementById('id_pass').value;
             
             for (let k in data.data) if (data.data[k] === '') 
             throw 'Preencha totos os campos';
 
-            if(data.data.password != document.getElementById('id_pass_conf').value)
-            throw 'As senhas divergem!';
-
-            if(data.data.password === dataUser.password.substr(0,16)) delete data.data.password;    
+            if(document.getElementById('id_pass').value != document.getElementById('id_pass_conf').value)
+            throw 'As senhas divergem!';    
             
             ipcRenderer.invoke('updateUser', data).then( dataRes => {
                 if (!dataRes.status) {
