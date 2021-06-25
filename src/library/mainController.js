@@ -1,6 +1,6 @@
 
 const { screen } = require('electron');
-const { win, createWindow } = require('../library/createWindow');
+const { win, createWindow } = require('./createWindow');
 
 class MainController {
 

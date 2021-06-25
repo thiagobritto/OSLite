@@ -6,7 +6,7 @@ startApp();
 
 // CODE ...
 
-const main = require('./src/controllers/mainController')()
+const main = require('./src/library/mainController')()
 
 ipcMain.on('createWindow', main.createWin)
 ipcMain.on('createWindowParent', main.createWindowParent)

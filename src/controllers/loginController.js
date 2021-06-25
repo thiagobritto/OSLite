@@ -11,7 +11,7 @@ class LoginController
             if (empty.isEmptyValuesObj(autParams)) reject('Preencha todos os campos!');
             let user = await users.selectUser({userName: autParams.user});
             let checkPass = user[0] ? await checkPassword(autParams.pass, user[0].password) : false;
-            if (!checkPass) {
+            if (!checkPass || user[0].status < 1) {
                 reject('Usuário ou senha invalidos!');
             } else {
                 ipcRenderer.on('createWindow-reply', (event, arg) => {
