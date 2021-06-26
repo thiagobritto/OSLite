@@ -1,50 +1,16 @@
 
-const { screen } = require('electron');
+const { ipcRenderer } = require('electron')
+const elementsDOM = require('../models/elementsDOM')()
 
 class DashController {
-
-    constructor(mainWindow, createWindow) {
-        DashController.mainWindow = mainWindow;
-        DashController.createWindow = createWindow;
+    authentication(btnAdmin){
+        if (ipcRenderer.sendSync('getDataUser').super < 1) 
+            elementsDOM.clearElements(btnAdmin); 
     }
-
-    openDashboard(event, args) {
-        const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-        DashController.dataUser = args;
-        DashController.createWindow()
-            .setTitle(`OSLite - ${DashController.dataUser.userName}`)
-            .setWidth(width)
-            .setHeight(height)
-            .run('dash');
-        DashController.mainWindow.dash.maximize();
-        DashController.mainWindow.login.close();
+    logout(){
+        ipcRenderer.send('startApp')
+        ipcRenderer.send('closeWindow', 'dash')
     }
-
-    checkPermisions(event, args) {
-        event.returnValue = DashController.dataUser.super;
-    }
-
-    logout(event, args) {
-        DashController.createWindow()
-            .setTitle(`Login`)
-            .setWidth(350)
-            .setHeight(280)
-            .setMaximizable(false)
-            .setResizable(false)
-            .setCenter(true)
-            .setDevTools(false)
-            .run();
-        DashController.mainWindow.dash.close();
-    }
-
-    openManageUsers(event, args) {
-        DashController.createWindow()
-            .setParent(DashController.mainWindow.dash)
-            .setModal(true)
-            .setShow(false)
-            .run('users');
-    }
-
 }
 
-module.exports = (mainWindow, createWindow) => new DashController(mainWindow, createWindow)
+module.exports = () => new DashController()

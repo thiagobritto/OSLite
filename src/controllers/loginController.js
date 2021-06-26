@@ -1,8 +1,12 @@
 
 const { ipcRenderer } = require('electron')
+
 const { checkPassword } = require('../library/emcryptHash');
 const users = require('../models/DAO/usersDAO')('users')
 const empty = require('../models/empty')()
+const str = require('../models/strings')()
+
+require('dotenv').config()
 
 class LoginController 
 {
@@ -15,15 +19,23 @@ class LoginController
                 reject('Usuário ou senha invalidos!');
             } else {
                 ipcRenderer.on('createWindow-reply', (event, arg) => {
-                    ipcRenderer.sendSync('closeWindow', 'login')
+                    ipcRenderer.send('maximizeWindow', 'dash')
+                    ipcRenderer.send('closeWindow', 'login')
                 })
                 ipcRenderer.send('createWindow', {
                     winName: 'dash',
                     dataUser: user[0],
-                    props: ipcRenderer.sendSync('fullScreen')
+                    props: {
+                        title: process.env.APPLICATION_NAME +' - '+ str.strFirstUpper(user[0].userName),
+                        ...ipcRenderer.sendSync('fullScreen')
+                    } 
                 })
             }
         })
+    }
+
+    applicationName(){
+        return process.env.APPLICATION_NAME;
     }
 }
 

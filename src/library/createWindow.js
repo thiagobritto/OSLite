@@ -2,13 +2,15 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path')
 
+require('dotenv').config();
+
 var win = {};
 
 function createWindow(winName, winProps = {}){
     win[winName] = new BrowserWindow({
         width: winProps.width ? winProps.width : 800,
         height: winProps.height ? winProps.height : 600,
-        title: winProps.title ? winProps.title : 'OSLite',
+        title: winProps.title ? winProps.title : process.env.APPLICATION_NAME,
         parent: winProps.parent ? winProps.parent : null,
         modal: winProps.modal ? winProps.modal : false,
         maximizable: winProps.maximizable === false ? winProps.maximizable : true,
@@ -27,10 +29,22 @@ function createWindow(winName, winProps = {}){
 
 function startApp(){
     app.whenReady().then(() => {
-        createWindow('login', { width: 380, height: 300, maximizable: false, resizable: false })
+        createWindow('login', { 
+            width: 380, 
+            height: 300, 
+            maximizable: false, 
+            resizable: false, 
+            title: 'login' 
+        })
         app.on('activate', function () {
             if (BrowserWindow.getAllWindows().length === 0) {
-                createWindow('login', { width: 380, height: 300, maximizable: false, resizable: false })
+                createWindow('login', { 
+                    width: 380, 
+                    height: 300, 
+                    maximizable: false, 
+                    resizable: false,
+                    title: 'login'
+                 })
             }
         })
     })

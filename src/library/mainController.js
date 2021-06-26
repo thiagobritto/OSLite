@@ -27,8 +27,12 @@ class MainController {
     }
 
     fullScreen(event, args){
-        let full = screen.getPrimaryDisplay().workAreaSize;
-        event.returnValue = full; 
+        let {width, height} = screen.getPrimaryDisplay().workAreaSize;
+        event.returnValue = {width, height}; 
+    }
+
+    maximizeWindow(event, winName){
+        win[winName].maximize();
     }
 
 }

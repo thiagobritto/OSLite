@@ -4,6 +4,7 @@ const login = require('../../../src/controllers/loginController')()
 require('../../dists/materialize/js/materialize');
 
 window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('logo').innerHTML = login.applicationName();
   document.getElementById('entrar').onclick = (e) => {
     e.preventDefault();
     login.sigin({
