@@ -7,21 +7,21 @@
             <th>Ativo</th>
             <th>Editar</th>
         </tr>
-        <% dataUsersParams.forEach( appData => { %>
+        <% data.forEach( user => { %>
         <tr>
-            <td><%=appData.id%></td>
-            <td class="userName"><%=appData.userName[0].toUpperCase() + appData.userName.substr(1)%></td>
-            <% if (appData.super > 0) { %>
-                <td><a href="#"><i data-super="0" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check</i></a></td>
+            <td><%=user.id%></td>
+            <td class="userName"><%=user.userName[0].toUpperCase() + user.userName.substr(1)%></td>
+            <% if (user.super > 0) { %>
+                <td><a href="#"><i data-super="0" data-super-id="<%=user.id%>" class="material-icons blue-text super">check</i></a></td>
             <% } else { %>
-                <td><a href="#"><i data-super="1" data-super-id="<%=appData.id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
+                <td><a href="#"><i data-super="1" data-super-id="<%=user.id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
             <% } %>
-            <% if (appData.status > 0) { %>
-                <td><a href="#"><i data-status="0" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check</i></a></td>
+            <% if (user.status > 0) { %>
+                <td><a href="#"><i data-status="0" data-status-id="<%=user.id%>" class="material-icons blue-text status">check</i></a></td>
             <% } else { %>
-                <td><a href="#"><i data-status="1" data-status-id="<%=appData.id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
+                <td><a href="#"><i data-status="1" data-status-id="<%=user.id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
             <% } %>
-            <td><a href="#" class="edit-user" data-id="<%=appData.id%>"><i class="material-icons blue-text">edit</i></a></td>
+            <td><a href="#" class="edit-user" data-id="<%=user.id%>"><i class="material-icons blue-text">edit</i></a></td>
         </tr>
         <% }); %>
     </table>

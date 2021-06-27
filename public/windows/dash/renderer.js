@@ -1,4 +1,9 @@
 
+document.addEventListener('DOMContentLoaded', function() {
+    let elems = document.querySelectorAll('.modal');
+    let instances = M.Modal.init(elems);
+});
+
 // setting menu area to hide it
 
 let aside = document.querySelector('aside')
@@ -33,3 +38,4 @@ function hideMenu(){
         if (lista != null) lista.classList.remove("drop-show") 
     }) 
 }
+

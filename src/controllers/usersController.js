@@ -1,51 +1,31 @@
 
-const { passwordHash } = require('../library/emcryptDecript');
-const usersDAO = require('../database/DAO/usersDAO')('users');
+const ejs  = require('ejs')
+const path = require('path')
+
+const users = require('../models/DAO/usersDAO')('users')
 
 class UsersController {
 
-    constructor(mainWindow, createWindow) {
-        UsersController.mainWindow = mainWindow;
-        UsersController.createWindow = createWindow;
+    constructor(){
+        this.dirViews = path.join(__dirname, '../../public/windows/users/views')
     }
 
-    getDataUsers(event, args) {
-        return usersDAO.selectUsers();
+    init(root){
+        this.showInsertUsers(root)
     }
 
-    async insertNewUser(event, args){
-        try{
-            if (args.password) args.password = await passwordHash(args.password);
-            let results = await usersDAO.insert(args);
-            return {
-                id: results,
-                status: true
-            }
-        } catch (err){
-            return {
-                error: 'Erro ao tentar inserir o usuário!',
-                errorMessage: err.message,
-                status: false
-            }
-        }
+    showInsertUsers(root){
+        ejs.renderFile(`${this.dirViews}/insert.ejs`,{}, (err, data) => root.innerHTML = data )
     }
-    async updateUser(event, args) {
-        try {
-            if (args.data.password) args.data.password = await passwordHash(args.data.password);
-            let results = await usersDAO.update({id:args.id}, args.data);
-            return {
-                rows: results,
-                status: true
-            }
-        } catch (err) {
-            return {
-                error: 'Erro ao tentar atualizar cadastro!',
-                errorMessage: err.message,
-                status: false
-            }
-        }
+
+    showManageUsers(root){
+        users.selectAll().then( data => {
+            ejs.renderFile(`${this.dirViews}/manage.ejs`, {data}, (err, view) => {
+                root.innerHTML = view
+            })
+        })
     }
     
 }
 
-module.exports = (mainWindow, createWindow) => new UsersController(mainWindow, createWindow);
+module.exports = () => new UsersController();

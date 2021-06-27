@@ -24,7 +24,7 @@ function createWindow(winName, winProps = {}){
         }
     })
     win[winName].loadFile(path.join(__dirname,`../../public/windows/${winName}/index.html`))
-    win[winName].webContents.openDevTools()
+    //win[winName].webContents.openDevTools()
 }
 
 function startApp(){

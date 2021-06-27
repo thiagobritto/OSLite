@@ -16,7 +16,7 @@
 <body>
   <aside class="not-select">
     <header id="titulo">
-      <h5>OSLite</h5>
+      <h5 class="appName"></h5>
     </header>
     <ul class="menu">
       <li id="os">OS</li>
@@ -38,17 +38,30 @@
           <li id="rel_user">Usuários</li>
         </ul>
       </li>
-      <li id="logout">Sair</li>
+      <li data-target="logoutModal" class="modal-trigger">
+        Sair
+      </li>
     </ul>
   </aside>
   <main>
     <header id="titulo" class="not-select">
-      <h5>titullo</h5>
+    
     </header>
     <section id="view">
-      <p onclick="test()" >click</p>
     </section>
   </main>
+
+  <!-- Modal Structure -->
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <h4>Olá <span class="user"></span></h4>
+      <p>Você deseja realmente sair do sistema?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" id="logout" class="modal-close waves-effect waves-green btn-flat">sim</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">não</a>
+    </div>
+  </div>
 
   <script src="../../dists/materialize/js/materialize.min.js"></script>
   <script src="./renderer.js"></script>

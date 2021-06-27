@@ -10,7 +10,7 @@ class UsersDAO{
         return database.select().table(this.tableNane).where(where);
     }
 
-    selectUsers(){
+    selectAll(){
         return database.select().table(this.tableNane); 
     }
 

@@ -1,6 +1,6 @@
 
-let btn_managerUser = document.getElementById('managerUsers');
-let btn_insertUser = document.getElementById('newUser')
+let btn_managerUser = document.getElementById('manageUsers');
+let btn_insertUser = document.getElementById('insertUsers')
 
 btn_managerUser.onclick = () => {
     btn_managerUser.parentNode.classList.add('active')

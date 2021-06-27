@@ -14,10 +14,6 @@ class MainController {
         event.reply('createWindow-reply');
     }
 
-    getDataUser(event, args){
-        event.returnValue = MainController.dataUser;
-    }
-
     createWindowParent(event, args){
         createWindow(args.winName, { parent: win[args.parentName], ...args.props });
     }
@@ -33,6 +29,13 @@ class MainController {
 
     maximizeWindow(event, winName){
         win[winName].maximize();
+    }
+
+    getDataUser(event, data){
+        event.returnValue = MainController.dataUser;
+    }
+    setDataUser(event, data){
+        MainController.dataUser = data;
     }
 
 }

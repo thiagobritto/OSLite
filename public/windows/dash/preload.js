@@ -6,7 +6,13 @@ window.addEventListener('DOMContentLoaded', () => {
     dash.authentication([
         document.getElementById('cad_user'),
         document.getElementById('rel_user')
-    ])
+    ], user => {
+        user[0].onclick = dash.openUserPanel
+    })
+
+    dash.setNameUserIn(document.getElementsByClassName('user'))
+    dash.setNameAppIn(document.getElementsByClassName('appName'))
+
     document.getElementById('logout').onclick = dash.logout
 })
 
