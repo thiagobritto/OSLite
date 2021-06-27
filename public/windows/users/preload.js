@@ -5,7 +5,10 @@ window.addEventListener('DOMContentLoaded', () => {
     let root = document.getElementById('root')
     users.init(root)
     document.getElementById('insertUsers').onclick = () => users.showInsertUsers(root)
-    document.getElementById('manageUsers').onclick = () => users.showManageUsers(root)
+    document.getElementById('manageUsers').onclick = () => users.showManageUsers(root, (view, fn) => {
+        fn( view.getElementsByClassName('status'), users.setStatus )
+        fn( view.getElementsByClassName('super'), users.setSuper )
+    })
 });
 
 

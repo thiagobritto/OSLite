@@ -25,6 +25,21 @@ class ElementsDOM {
     setInElements(elements, text){
         [...elements].forEach(element => element.innerText = str.strFirstUpper(text));
     }
+
+    setClickInCollection(elements, callback){
+        [...elements].forEach(element => element.onclick = callback );
+    }
+
+    setElementCheck(element, nameAttrData){
+        if (element.innerText == 'check'){
+            element.innerText = 'check_box_outline_blank'
+            element.setAttribute( nameAttrData, 1 )
+        } else {
+            element.innerText = 'check'
+            element.setAttribute( nameAttrData, 0)
+        }
+    }
+
 }
 
 module.exports = () => new ElementsDOM()
