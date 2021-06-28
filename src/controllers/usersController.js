@@ -34,19 +34,19 @@ class UsersController {
 
     setStatus(e){
         usersDAO.update(
-            { id: e.target.getAttribute('data-status-id')  },
-            { status: e.target.getAttribute('data-status') }
+            { id: elementsDOM.getAttributeData(e.target, 'id')  },
+            { status: elementsDOM.getAttributeData(e.target, 'status') }
         ).then( res => {
-            if (res) elementsDOM.setElementCheck(e.target, 'data-status')
+            if (res) elementsDOM.setElementCheck(e.target, 'status')
         })
     }
 
     setSuper(e){
         usersDAO.update(
-            { id: e.target.getAttribute('data-super-id') },
-            { super: e.target.getAttribute('data-super') }
+            { id: elementsDOM.getAttributeData(e.target, 'id') },
+            { super: elementsDOM.getAttributeData(e.target, 'super') }
         ).then( res => {
-            if (res) elementsDOM.setElementCheck(e.target, 'data-super')
+            if (res) elementsDOM.setElementCheck(e.target, 'super')
         })
     }
     

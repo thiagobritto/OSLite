@@ -29,14 +29,18 @@ class ElementsDOM {
     setClickInCollection(elements, callback){
         [...elements].forEach(element => element.onclick = callback );
     }
+    
+    getAttributeData(element, nameAttrData){
+        return element.getAttribute( `data-${nameAttrData}` )
+    }
 
     setElementCheck(element, nameAttrData){
         if (element.innerText == 'check'){
             element.innerText = 'check_box_outline_blank'
-            element.setAttribute( nameAttrData, 1 )
+            element.setAttribute( `data-${nameAttrData}`, 1 )
         } else {
             element.innerText = 'check'
-            element.setAttribute( nameAttrData, 0)
+            element.setAttribute( `data-${nameAttrData}`, 0 )
         }
     }
 
