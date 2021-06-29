@@ -7,23 +7,32 @@
             <th>Ativo</th>
             <th>Editar</th>
         </tr>
-        <% data.forEach( user => { %>
-        <tr>
-            <td><%=user.id%></td>
-            <td class="userName"><%=user.userName[0].toUpperCase() + user.userName.substr(1)%></td>
-            <% if (user.super > 0) { %>
-                <td><a href="#"><i data-super="0" data-id="<%=user.id%>" class="material-icons blue-text super">check</i></a></td>
-            <% } else { %>
-                <td><a href="#"><i data-super="1" data-id="<%=user.id%>" class="material-icons blue-text super">check_box_outline_blank</i></a></td>
-            <% } %>
-            <% if (user.status > 0) { %>
-                <td><a href="#"><i data-status="0" data-id="<%=user.id%>" class="material-icons blue-text status">check</i></a></td>
-            <% } else { %>
-                <td><a href="#"><i data-status="1" data-id="<%=user.id%>" class="material-icons blue-text status">check_box_outline_blank</i></a></td>
-            <% } %>
-            <td><a href="#" class="edit-user" data-id="<%=user.id%>"><i class="material-icons blue-text">edit</i></a></td>
-        </tr>
-        <% }); %>
+        <% data.forEach( user=> { %>
+            <tr>
+                <td>
+                    <%=user.id%>
+                </td>
+                <td class="userName">
+                    <%=user.userName[0].toUpperCase() + user.userName.substr(1)%>
+                </td>
+                <% if (user.super> 0) { %>
+                    <td><a href="#"><i data-super="0" data-id="<%=user.id%>"
+                                class="material-icons blue-text super">check</i></a></td>
+                    <% } else { %>
+                        <td><a href="#"><i data-super="1" data-id="<%=user.id%>"
+                                    class="material-icons blue-text super">check_box_outline_blank</i></a></td>
+                        <% } %>
+                            <% if (user.status> 0) { %>
+                                <td><a href="#"><i data-status="0" data-id="<%=user.id%>"
+                                            class="material-icons blue-text status">check</i></a></td>
+                                <% } else { %>
+                                    <td><a href="#"><i data-status="1" data-id="<%=user.id%>"
+                                                class="material-icons blue-text status">check_box_outline_blank</i></a>
+                                    </td>
+                                    <% } %>
+                                        <td><a href="#"><i class="material-icons blue-text edit"
+                                                    data-id="<%=user.id%>">edit</i></a></td>
+            </tr>
+            <% }); %>
     </table>
 </div>
-

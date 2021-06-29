@@ -8,6 +8,7 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
+                <input id="id_hash" type="hidden" value="<%=dataUser.password.substr(0,16)%>">
                 <input id="id_pass" type="password" class="validate" maxlength="16" value="<%=dataUser.password.substr(0,16)%>">
                 <label class="active" for="id_pass">Nova Senha</label>
             </div>
@@ -46,7 +47,7 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <button id="efitar" class="waves-effect waves-light btn grey darken-4">
+                <button id="edit" class="waves-effect waves-light btn grey darken-4">
                     Atualizar
                 </button>
                 <a href="#" id="voltar" class="waves-effect waves-light btn grey darken-4">

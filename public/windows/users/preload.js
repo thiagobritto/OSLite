@@ -9,13 +9,21 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     document.getElementById('manageUsers').onclick = () => {
         users.showManageUsers(root, (view, setClickEventsOnAll) => {
-            setClickEventsOnAll( 
-                view.getElementsByClassName('status'), 
-                users.setStatus 
+            setClickEventsOnAll(
+                view.getElementsByClassName('status'),
+                users.setStatus
             )
-            setClickEventsOnAll( 
-                view.getElementsByClassName('super'), 
-                users.setSuper 
+            setClickEventsOnAll(
+                view.getElementsByClassName('super'),
+                users.setSuper
+            )
+            setClickEventsOnAll(
+                view.getElementsByClassName('edit'),
+                (e) => users.showEditUser(e, view, newVw => {
+                    newVw.querySelector('#edit').onclick = (e) => {
+                        users.setData(e)
+                    }
+                })
             )
         })
     }
@@ -44,13 +52,13 @@ function setPageInsertUser()
                 super: document.getElementById('id_admin').checked ? 1 : 0,
                 status: document.getElementById('id_active').checked ? 1 : 0
             };
-            
-            for (let k in data) if (data[k] === '') 
+
+            for (let k in data) if (data[k] === '')
             throw 'Preencha totos os campos';
-            
+
             if(data.password != document.getElementById('id_pass_conf').value)
             throw 'As senhas divergem!';
-            
+
             ipcRenderer.invoke('insertNewUser', data).then( res => {
                 if (!res.status) {
                     msgError(`${res.error}, tente outro nome.`);
@@ -61,7 +69,7 @@ function setPageInsertUser()
                     });
                 }
             })
-            
+
         } catch(err){
             msgError(err);
         }
@@ -88,7 +96,7 @@ function setPageManageUser(){
             }
         }
     });
-    
+
     let [...btn_status] = document.getElementsByClassName('status');
     btnUpdateData(btn_status, btn => {
         return {
@@ -98,7 +106,7 @@ function setPageManageUser(){
             }
         }
     });
-    
+
     let [...btn_edit] = document.getElementsByClassName('edit-user');
     btnEditData(btn_edit);
 }
@@ -150,16 +158,16 @@ function setPageEdittUser(dataUser){
                     status: document.getElementById('id_active').checked ? 1 : 0
                 }
             };
-            
-            if(document.getElementById('id_pass').value != dataUser.password.substr(0,16)) 
+
+            if(document.getElementById('id_pass').value != dataUser.password.substr(0,16))
             data.data.password = document.getElementById('id_pass').value;
-            
-            for (let k in data.data) if (data.data[k] === '') 
+
+            for (let k in data.data) if (data.data[k] === '')
             throw 'Preencha totos os campos';
-            
+
             if(document.getElementById('id_pass').value != document.getElementById('id_pass_conf').value)
-            throw 'As senhas divergem!';    
-            
+            throw 'As senhas divergem!';
+
             ipcRenderer.invoke('updateUser', data).then( dataRes => {
                 if (!dataRes.status) {
                     msgError(`${dataRes.error}`);
@@ -170,7 +178,7 @@ function setPageEdittUser(dataUser){
                     });
                 }
             });
-            
+
         } catch(err){
             msgError(err);
         }

@@ -1,31 +1,32 @@
 
-const database = require('../index')
+const database = require('../../database')
 
 class CRUD{
-    constructor(table){
-        this.table = table
+
+    constructor(tableNane) {
+        this.tableNane = tableNane;
     }
-    async list() {
-        return await database(this.table).then( res => res ).catch( err => err )
+
+    select(where, columns = []) {
+        return database.select(columns).table(this.tableNane).where(where);
     }
-    async select(columns = []) {
-        return await database.select(columns).table(this.table).then( res => res ).catch( err => err )
+
+    selectAll(columns = []) {
+        return database.select(columns).table(this.tableNane);
     }
-    async selectWhere(where = {}) {
-        return await database.select().table(this.table).where(where).then( res => res ).catch( err => err )
+
+    insert(data) {
+        return database.insert(data).into(this.tableNane);
     }
-    async selectLimitOffset(limit, offset = 0, columns = []) {
-        return await database.select(columns).table(this.table).limit(limit).offset(offset).then( res => res ).catch( err => err )
+
+    update(where, updateData) {
+        return database.where(where).update(updateData).table(this.tableNane);
     }
-    async insert(data) {
-        return await database.insert(data).into(this.table).then( res => res ).catch( err => err )
+
+    delete(where = {}) {
+        return database.where(where).delete().table(this.tableNane);
     }
-    async update(where = {}, update = {}) {
-        return await database.where(where).update(update).table(this.table)
-    }
-    async delete(where = {}) {
-        return await database.where(where).delete().table(this.table).then( res => res ).catch( err => err )
-    }
+    
 }
 
-module.exports = (table) => new CRUD(table)
+module.exports = { CRUD }
