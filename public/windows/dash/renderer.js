@@ -38,4 +38,3 @@ function hideMenu(){
         if (lista != null) lista.classList.remove("drop-show") 
     }) 
 }
-

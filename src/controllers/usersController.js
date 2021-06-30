@@ -52,7 +52,7 @@ class UsersController {
 
         elementsDOM.setClick(
             UsersController.root().querySelector('#edit'),
-            (e) => this.prepareData(e).executeData(dataUser.id)
+            (e) => this.prepareData(e).setData(dataUser.id)
         )
         //voltar
         elementsDOM.setClick(
@@ -72,14 +72,14 @@ class UsersController {
         return this
     }
 
-    executeData(id) {
+    setData(id) {
         if (this.hash == this.pass || this.hash == this.conf) {
             // nao salva senha
             usersDAO.dataUpdate(
                 id,
                 this.status,
                 this.superUser
-            ).then(res => {
+            ).then( res => {
                 if (res) {
                     elementsDOM.msgSucess(
                         this.body.querySelector('#error'),
@@ -100,7 +100,7 @@ class UsersController {
                 this.status,
                 this.superUser,
                 this.pass
-            ).then(res => {
+            ).then( res => {
                 if (res) {
                     elementsDOM.msgSucess(
                         this.body.querySelector('#error'),

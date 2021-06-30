@@ -1,5 +1,7 @@
 
 const { CRUD } = require('./CRUD');
+const data = require('../dateFormat')()
+const { passwordHash } = require('../../library/emcryptHash')
 
 class UsersDAO extends CRUD {
     constructor(tableNane) {
@@ -23,19 +25,19 @@ class UsersDAO extends CRUD {
         return this.update({ id }, { super: superUp })
     }
 
-    dataUpdate(id, status, superUser, passwold = false) {
-        if (passwold) {
+    async dataUpdate(id, status, superUser, password = false) {
+        if (password) {
             return this.update({ id }, {
                 status: status ? 1 : 0,
                 super: superUser ? 1 : 0,
-                updated_at: new Date(),
-                passwold
+                updated_at: data.formatDB(new Date()),
+                password: await passwordHash(password)
             })
         } else {
             return this.update({ id }, {
                 status: status ? 1 : 0,
                 super: superUser ? 1 : 0,
-                updated_at: new Date()
+                updated_at: data.formatDB(new Date())
             })
         }
     }
