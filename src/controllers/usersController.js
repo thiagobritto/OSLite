@@ -5,7 +5,7 @@ const path = require('path')
 const usersDAO = require('../models/DAO/usersDAO')('users')
 const elementsDOM = require('../models/elementsDOM')()
 
-dirViews = file => 
+dirViews = file =>
     path.join(__dirname, `../../public/windows/users/views/${file}`)
 
 class UsersController {
@@ -15,7 +15,7 @@ class UsersController {
         return this
     }
 
-    view(err, view){
+    view(err, view) {
         UsersController.root().innerHTML = view
     }
 
@@ -25,8 +25,8 @@ class UsersController {
 
     async showManageUsers() {
         let data = await usersDAO.getUsers()
-        ejs.renderFile(dirViews('manage.ejs'), {data}, this.view)
-        
+        ejs.renderFile(dirViews('manage.ejs'), { data }, this.view)
+
         elementsDOM.setClickInCollection(
             UsersController.root().getElementsByClassName('super'),
             this.setSuper
@@ -47,27 +47,32 @@ class UsersController {
         let dataUser = await usersDAO.getUser(
             elementsDOM.getAttributeData(e.target, 'id')
         )
-        
-        ejs.renderFile(dirViews('edit.ejs'), {dataUser}, this.view)
-        
+
+        ejs.renderFile(dirViews('edit.ejs'), { dataUser }, this.view)
+
         elementsDOM.setClick(
             UsersController.root().querySelector('#edit'),
             (e) => this.setData(e, dataUser.id)
         )
     }
 
-    setData(e, id){
+    setData(e, id) {
         e.preventDefault()
-        let hash = UsersController.root().querySelector('#id_hash').value
-        let pass = UsersController.root().querySelector('#id_pass').value
-        let conf = UsersController.root().querySelector('#id_pass_conf').value
-        
-        if (hash == pass || hash == conf){
+        let body = UsersController.root().parentNode
+        let hash = body.querySelector('#id_hash').value
+        let pass = body.querySelector('#id_pass').value
+        let conf = body.querySelector('#id_pass_conf').value
+
+        console.log(body);
+        if (hash == pass || hash == conf) {
             // nao salva senha
             console.log('nao salva senha');
-        } else if (pass != conf){
+        } else if (pass != conf) {
             // senhas nao batem
-            console.log('senhas nao batem');
+            elementsDOM.msgError(
+                body.querySelector('#error'),
+                'As senhas não batem!'
+            )
         } else {
             // salva senha
             console.log('salva senha');
@@ -78,7 +83,7 @@ class UsersController {
         usersDAO.statusUpdate(
             elementsDOM.getAttributeData(e.target, 'id'),
             elementsDOM.getAttributeData(e.target, 'status')
-        ).then( res => {
+        ).then(res => {
             if (res) elementsDOM.setElementCheck(e.target, 'status')
         })
     }
@@ -87,7 +92,7 @@ class UsersController {
         usersDAO.superUpdate(
             elementsDOM.getAttributeData(e.target, 'id'),
             elementsDOM.getAttributeData(e.target, 'super')
-        ).then( res => {
+        ).then(res => {
             if (res) elementsDOM.setElementCheck(e.target, 'super')
         })
     }

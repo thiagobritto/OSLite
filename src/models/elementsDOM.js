@@ -8,12 +8,12 @@ const str = require('./strings')()
  */
 
 class ElementsDOM {
-    
+
     /**
      * percorre um array de elementos do DOM a serem excluidos
      * @param {[object]} elements ex: [document.getElementById('id'), document.getElementById('id')] 
      */
-    clearElements(elements){
+    clearElements(elements) {
         elements.forEach(element => element.parentNode.removeChild(element));
     }
 
@@ -22,30 +22,41 @@ class ElementsDOM {
      * @param {HTMLCollection} elements ex: document.getElementsByClassName('class') 
      * @param {string} text
      */
-    setInElements(elements, text){
+    setInElements(elements, text) {
         [...elements].forEach(element => element.innerText = str.strFirstUpper(text));
     }
 
-    setClick(elements, callback){
+    setClick(elements, callback) {
         elements.onclick = callback
     }
 
-    setClickInCollection(elements, callback){
-        [...elements].forEach(element => element.onclick = callback );
-    }
-    
-    getAttributeData(element, nameAttrData){
-        return element.getAttribute( `data-${nameAttrData}` )
+    setClickInCollection(elements, callback) {
+        [...elements].forEach(element => element.onclick = callback);
     }
 
-    setElementCheck(element, nameAttrData){
-        if (element.innerText == 'check'){
+    getAttributeData(element, nameAttrData) {
+        return element.getAttribute(`data-${nameAttrData}`)
+    }
+
+    setElementCheck(element, nameAttrData) {
+        if (element.innerText == 'check') {
             element.innerText = 'check_box_outline_blank'
-            element.setAttribute( `data-${nameAttrData}`, 1 )
+            element.setAttribute(`data-${nameAttrData}`, 1)
         } else {
             element.innerText = 'check'
-            element.setAttribute( `data-${nameAttrData}`, 0 )
+            element.setAttribute(`data-${nameAttrData}`, 0)
         }
+    }
+
+    msgError(element, msg) {
+        element.innerText = msg
+        element.classList.add('errorShow')
+    }
+
+    msgSucess(element, msg) {
+        element.innerText = msg
+        element.style.color = 'blue'
+        element.classList.add('errorShow')
     }
 
 }
