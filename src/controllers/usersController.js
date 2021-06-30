@@ -52,13 +52,26 @@ class UsersController {
         
         elementsDOM.setClick(
             UsersController.root().querySelector('#edit'),
-            this.setData
+            (e) => this.setData(e, dataUser.id)
         )
     }
 
-    setData(e){
+    setData(e, id){
         e.preventDefault()
-        console.log('data');
+        let hash = UsersController.root().querySelector('#id_hash').value
+        let pass = UsersController.root().querySelector('#id_pass').value
+        let conf = UsersController.root().querySelector('#id_pass_conf').value
+        
+        if (hash == pass || hash == conf){
+            // nao salva senha
+            console.log('nao salva senha');
+        } else if (pass != conf){
+            // senhas nao batem
+            console.log('senhas nao batem');
+        } else {
+            // salva senha
+            console.log('salva senha');
+        }
     }
 
     setStatus(e) {

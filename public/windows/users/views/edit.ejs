@@ -24,9 +24,9 @@
                 <p>
                     <label>
                         <% if (dataUser.status > 0) { %>
-                            <input id="id_active" type="checkbox" checked="checked" />
+                            <input id="id_status" type="checkbox" checked="checked" />
                         <% } else { %>
-                            <input id="id_active" type="checkbox" />
+                            <input id="id_status" type="checkbox" />
                         <% } %>
                         <span>Ativar as permições de usuário?</span>
                     </label>
@@ -36,9 +36,9 @@
                 <p>
                     <label>
                         <% if (dataUser.super > 0) { %>
-                            <input id="id_admin" type="checkbox" checked="checked" />
+                            <input id="id_super" type="checkbox" checked="checked" />
                         <% } else { %>
-                            <input id="id_admin" type="checkbox" />
+                            <input id="id_super" type="checkbox" />
                         <% } %>
                         <span>Usuário Adminitrador?</span>
                     </label>

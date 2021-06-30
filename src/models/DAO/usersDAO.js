@@ -22,6 +22,10 @@ class UsersDAO extends CRUD {
     superUpdate(id, superUp){
         return this.update( { id }, { super: superUp } )
     }
+
+    dataUpdate(){
+        
+    }
 }
 
 module.exports = (tableNane) => new UsersDAO(tableNane)
