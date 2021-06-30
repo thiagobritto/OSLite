@@ -5,62 +5,76 @@ const path = require('path')
 const usersDAO = require('../models/DAO/usersDAO')('users')
 const elementsDOM = require('../models/elementsDOM')()
 
+dirViews = file => 
+    path.join(__dirname, `../../public/windows/users/views/${file}`)
+
 class UsersController {
 
-    constructor() {
-        UsersController.dirViews = path.join(__dirname, '../../public/windows/users/views')
+    index(root) {
+        UsersController.root = root
+        return this
     }
 
-    init(root) {
-        this.showInsertUsers(root)
+    view(err, view){
+        UsersController.root().innerHTML = view
     }
 
-    showInsertUsers(root) {
-        ejs.renderFile(`${UsersController.dirViews}/insert.ejs`, {}, (err, data) => root.innerHTML = data)
+    showInsertUsers() {
+        ejs.renderFile(dirViews('insert.ejs'), {}, this.view)
     }
 
-    showManageUsers(root, callback) {
-        usersDAO.selectAll().then(data => {
-            ejs.renderFile(`${UsersController.dirViews}/manage.ejs`, { data }, (err, view) => {
-                root.innerHTML = view
-                callback(root, elementsDOM.setClickInCollection)
-            })
-        })
+    async showManageUsers() {
+        let data = await usersDAO.getUsers()
+        ejs.renderFile(dirViews('manage.ejs'), {data}, this.view)
+        
+        elementsDOM.setClickInCollection(
+            UsersController.root().getElementsByClassName('super'),
+            this.setSuper
+        )
+
+        elementsDOM.setClickInCollection(
+            UsersController.root().getElementsByClassName('status'),
+            this.setStatus
+        )
+
+        elementsDOM.setClickInCollection(
+            UsersController.root().getElementsByClassName('edit'),
+            (e) => this.showEditUser(e)
+        )
     }
 
-    showEditUser(e, root, callback) {
-        usersDAO.select(
-            { id: elementsDOM.getAttributeData(e.target, 'id') }
-        ).then( data => {
-            let dataUser = data[0] ? data[0] : {};
-            ejs.renderFile(`${UsersController.dirViews}/edit.ejs`, { 
-                dataUser 
-            }, (err, view) => {
-                root.innerHTML = view
-                callback(root)
-            })
-        })
+    async showEditUser(e) {
+        let dataUser = await usersDAO.getUser(
+            elementsDOM.getAttributeData(e.target, 'id')
+        )
+        
+        ejs.renderFile(dirViews('edit.ejs'), {dataUser}, this.view)
+        
+        elementsDOM.setClick(
+            UsersController.root().querySelector('#edit'),
+            this.setData
+        )
     }
 
     setData(e){
         e.preventDefault()
-        console.log('ok');
+        console.log('data');
     }
 
     setStatus(e) {
-        usersDAO.update(
-            { id: elementsDOM.getAttributeData(e.target, 'id') },
-            { status: elementsDOM.getAttributeData(e.target, 'status') }
-        ).then(res => {
+        usersDAO.statusUpdate(
+            elementsDOM.getAttributeData(e.target, 'id'),
+            elementsDOM.getAttributeData(e.target, 'status')
+        ).then( res => {
             if (res) elementsDOM.setElementCheck(e.target, 'status')
         })
     }
 
     setSuper(e) {
-        usersDAO.update(
-            { id: elementsDOM.getAttributeData(e.target, 'id') },
-            { super: elementsDOM.getAttributeData(e.target, 'super') }
-        ).then(res => {
+        usersDAO.superUpdate(
+            elementsDOM.getAttributeData(e.target, 'id'),
+            elementsDOM.getAttributeData(e.target, 'super')
+        ).then( res => {
             if (res) elementsDOM.setElementCheck(e.target, 'super')
         })
     }

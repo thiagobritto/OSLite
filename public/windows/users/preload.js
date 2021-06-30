@@ -2,31 +2,12 @@
 const users = require('../../../src/controllers/usersController')()
 
 window.addEventListener('DOMContentLoaded', () => {
-    let root = document.getElementById('root')
-    users.init(root)
-    document.getElementById('insertUsers').onclick = () => {
-        users.showInsertUsers(root)
-    }
-    document.getElementById('manageUsers').onclick = () => {
-        users.showManageUsers(root, (view, setClickEventsOnAll) => {
-            setClickEventsOnAll(
-                view.getElementsByClassName('status'),
-                users.setStatus
-            )
-            setClickEventsOnAll(
-                view.getElementsByClassName('super'),
-                users.setSuper
-            )
-            setClickEventsOnAll(
-                view.getElementsByClassName('edit'),
-                (e) => users.showEditUser(e, view, newVw => {
-                    newVw.querySelector('#edit').onclick = (e) => {
-                        users.setData(e)
-                    }
-                })
-            )
-        })
-    }
+    users.index(() => document.getElementById('root')).showInsertUsers()
+    
+    document.getElementById('insertUsers').onclick = e => 
+        users.showInsertUsers(e)
+    document.getElementById('manageUsers').onclick = e => 
+        users.showManageUsers(e)
 });
 
 

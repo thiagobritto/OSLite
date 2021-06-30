@@ -26,6 +26,10 @@ class ElementsDOM {
         [...elements].forEach(element => element.innerText = str.strFirstUpper(text));
     }
 
+    setClick(elements, callback){
+        elements.onclick = callback
+    }
+
     setClickInCollection(elements, callback){
         [...elements].forEach(element => element.onclick = callback );
     }
