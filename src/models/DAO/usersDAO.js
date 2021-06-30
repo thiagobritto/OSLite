@@ -15,16 +15,29 @@ class UsersDAO extends CRUD {
         return user[0]
     }
 
-    statusUpdate(id, status){
-        return this.update( { id }, { status } )
+    statusUpdate(id, status) {
+        return this.update({ id }, { status })
     }
 
-    superUpdate(id, superUp){
-        return this.update( { id }, { super: superUp } )
+    superUpdate(id, superUp) {
+        return this.update({ id }, { super: superUp })
     }
 
-    dataUpdate(){
-        
+    dataUpdate(id, status, superUser, passwold = false) {
+        if (passwold) {
+            return this.update({ id }, {
+                status: status ? 1 : 0,
+                super: superUser ? 1 : 0,
+                updated_at: new Date(),
+                passwold
+            })
+        } else {
+            return this.update({ id }, {
+                status: status ? 1 : 0,
+                super: superUser ? 1 : 0,
+                updated_at: new Date()
+            })
+        }
     }
 }
 

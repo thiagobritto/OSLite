@@ -48,15 +48,23 @@ class ElementsDOM {
         }
     }
 
-    msgError(element, msg) {
+    msg(element, msg, color) {
         element.innerText = msg
+        element.style.color = color
         element.classList.add('errorShow')
+        setTimeout(this.msgClear, 3000, element)
+    }
+
+    msgError(element, msg) {
+        this.msg(element, msg, 'red')
     }
 
     msgSucess(element, msg) {
-        element.innerText = msg
-        element.style.color = 'blue'
-        element.classList.add('errorShow')
+        this.msg(element, msg, 'blue')
+    }
+
+    msgClear(element) {
+        element.classList.remove('errorShow')
     }
 
 }

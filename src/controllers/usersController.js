@@ -52,30 +52,62 @@ class UsersController {
 
         elementsDOM.setClick(
             UsersController.root().querySelector('#edit'),
-            (e) => this.setData(e, dataUser.id)
+            (e) => this.prepareData(e).executeData(dataUser.id)
+        )
+        //voltar
+        elementsDOM.setClick(
+            UsersController.root().querySelector('#voltar'),
+            (e) => this.showManageUsers()
         )
     }
 
-    setData(e, id) {
+    prepareData(e) {
         e.preventDefault()
-        let body = UsersController.root().parentNode
-        let hash = body.querySelector('#id_hash').value
-        let pass = body.querySelector('#id_pass').value
-        let conf = body.querySelector('#id_pass_conf').value
+        this.body = UsersController.root().parentNode
+        this.hash = this.body.querySelector('#id_hash').value
+        this.pass = this.body.querySelector('#id_pass').value
+        this.conf = this.body.querySelector('#id_pass_conf').value
+        this.status = this.body.querySelector('#id_status').checked
+        this.superUser = this.body.querySelector('#id_super').checked
+        return this
+    }
 
-        console.log(body);
-        if (hash == pass || hash == conf) {
+    executeData(id) {
+        if (this.hash == this.pass || this.hash == this.conf) {
             // nao salva senha
-            console.log('nao salva senha');
-        } else if (pass != conf) {
+            usersDAO.dataUpdate(
+                id,
+                this.status,
+                this.superUser
+            ).then(res => {
+                if (res) {
+                    elementsDOM.msgSucess(
+                        this.body.querySelector('#error'),
+                        'Alterado com sucesso!'
+                    )
+                }
+            })
+        } else if (this.pass != this.conf) {
             // senhas nao batem
             elementsDOM.msgError(
-                body.querySelector('#error'),
+                this.body.querySelector('#error'),
                 'As senhas não batem!'
             )
         } else {
             // salva senha
-            console.log('salva senha');
+            usersDAO.dataUpdate(
+                id,
+                this.status,
+                this.superUser,
+                this.pass
+            ).then(res => {
+                if (res) {
+                    elementsDOM.msgSucess(
+                        this.body.querySelector('#error'),
+                        'Alterado com sucesso!'
+                    )
+                }
+            })
         }
     }
 
