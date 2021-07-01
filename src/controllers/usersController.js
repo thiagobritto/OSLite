@@ -21,6 +21,51 @@ class UsersController {
 
     showInsertUsers() {
         ejs.renderFile(dirViews('insert.ejs'), {}, this.view)
+
+        elementsDOM.setClick(
+            UsersController.root().querySelector('#cadastrar'),
+            (e) => this.insertData(e)
+        )
+    }
+    // aqui
+    insertData(e) {
+        e.preventDefault()
+        let body = UsersController.root().parentNode
+        let user = body.querySelector('#id_user').value
+        let pass = body.querySelector('#id_pass').value
+        let conf = body.querySelector('#id_pass_conf').value
+        let status = body.querySelector('#id_status').checked
+        let superUser = body.querySelector('#id_super').checked
+
+        if (pass != conf) {
+            // senhas nao batem
+            elementsDOM.msgError(
+                body.querySelector('#error'),
+                'As senhas não batem!'
+            )
+        } else if (user == '' || pass == '' || conf == '') {
+            elementsDOM.msgError(
+                body.querySelector('#error'),
+                'Preencha todos os campos!'
+            )
+        } else {
+            // salva senha
+            usersDAO.insertUser(
+                user, pass, status, superUser
+            ).then( res => {
+                if (res) {
+                    elementsDOM.msgSucess(
+                        body.querySelector('#error'),
+                        'Usuário cadastrado!'
+                    )
+                }
+            }).catch( err => {
+                elementsDOM.msgError(
+                    body.querySelector('#error'),
+                    'já existe um usuário com nome!'
+                )
+            })
+        }
     }
 
     async showManageUsers() {
@@ -54,7 +99,7 @@ class UsersController {
             UsersController.root().querySelector('#edit'),
             (e) => this.prepareData(e).setData(dataUser.id)
         )
-        //voltar
+
         elementsDOM.setClick(
             UsersController.root().querySelector('#voltar'),
             (e) => this.showManageUsers()
@@ -79,7 +124,7 @@ class UsersController {
                 id,
                 this.status,
                 this.superUser
-            ).then( res => {
+            ).then(res => {
                 if (res) {
                     elementsDOM.msgSucess(
                         this.body.querySelector('#error'),
@@ -93,6 +138,11 @@ class UsersController {
                 this.body.querySelector('#error'),
                 'As senhas não batem!'
             )
+        } else if (this.pass == '' || this.conf == '') {
+            elementsDOM.msgError(
+                this.body.querySelector('#error'),
+                'Preencha todos os campos!'
+            )
         } else {
             // salva senha
             usersDAO.dataUpdate(
@@ -100,7 +150,7 @@ class UsersController {
                 this.status,
                 this.superUser,
                 this.pass
-            ).then( res => {
+            ).then(res => {
                 if (res) {
                     elementsDOM.msgSucess(
                         this.body.querySelector('#error'),
