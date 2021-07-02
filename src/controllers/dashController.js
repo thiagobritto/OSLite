@@ -30,14 +30,22 @@ class DashController {
         elementsDOM.setInElements(elementsName, process.env.APPLICATION_NAME)
     }
 
-    openUserPanel() {
+    openWindowParent(name, parent) {
         ipcRenderer.send('createWindowParent', {
-            winName: 'users',
-            parentName: 'dash',
+            winName: name,
+            parentName: parent,
             props: {
                 modal: true
             }
         })
+    }
+
+    openUserPanel() {
+        this.openWindowParent('users', 'dash')
+    }
+
+    openClientPanel(){
+        this.openWindowParent('client', 'dash')
     }
 }
 

@@ -1,0 +1,21 @@
+
+
+module.exports = class Routes {
+    constructor(document, routes) {
+        this.getDocument = document;
+        this.routes = routes;
+        this.routesReload();
+
+    }
+
+    routesReload(document = false) {
+        document = document ? document : this.getDocument();
+        [...document.links].forEach(link => {
+            this.routes.forEach(route => {
+                if (link.href.split('#')[1] == route) {
+                    link.onclick = (e) => this[route](this.getDocument(), e)
+                }
+            })
+        })
+    }
+}

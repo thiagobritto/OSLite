@@ -7,13 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('cad_user'),
         document.getElementById('rel_user')
     ], user => {
-        user[0].onclick = dash.openUserPanel
+        user[0].onclick = e => dash.openUserPanel(e)
     })
 
     dash.setNameUserIn(document.getElementsByClassName('user'))
     dash.setNameAppIn(document.getElementsByClassName('appName'))
 
-    document.getElementById('logout').onclick = dash.logout
+    document.getElementById('cad_client').onclick = e => dash.openClientPanel(e)
+    document.getElementById('logout').onclick = e => dash.logout(e)
 })
 
 /*

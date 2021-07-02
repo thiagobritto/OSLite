@@ -67,6 +67,14 @@ class ElementsDOM {
         element.classList.remove('errorShow')
     }
 
+    isEmptyInputValues(element) {
+        let cond = false;
+        [...element].forEach(input => {
+            if (input.value === '') cond = true;
+        })
+        return cond
+    }
+
 }
 
 module.exports = () => new ElementsDOM()

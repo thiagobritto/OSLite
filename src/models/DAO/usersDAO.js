@@ -1,7 +1,8 @@
 
-const { CRUD } = require('./CRUD');
 const { passwordHash } = require('../../library/emcryptHash')
 const data = require('../dateFormat')()
+
+const CRUD = require('./CRUD')
 
 class UsersDAO extends CRUD {
     constructor(tableNane) {

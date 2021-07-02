@@ -1,7 +1,7 @@
 
 const database = require('../../database')
 
-class CRUD{
+module.exports = class CRUD{
 
     constructor(tableNane) {
         this.tableNane = tableNane;
@@ -28,5 +28,3 @@ class CRUD{
     }
     
 }
-
-module.exports = { CRUD }
