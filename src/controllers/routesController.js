@@ -13,7 +13,14 @@ module.exports = class Routes {
         [...document.links].forEach(link => {
             this.routes.forEach(route => {
                 if (link.href.split('#')[1] == route) {
-                    link.onclick = (e) => this[route](this.getDocument(), e)
+                    link.onclick = (e) => this[route]({
+                        params: JSON.parse(
+                            e.target.getAttribute('data-params')
+                        ),
+                        document: this.getDocument(),
+                        target: e.target,
+                        event: e
+                    })
                 }
             })
         })

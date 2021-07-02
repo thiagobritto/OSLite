@@ -13,31 +13,36 @@ let Routes = require('./routesController')
 class Client extends Routes {
     constructor(document, routes) {
         super(document, routes);
-        this.index(document())
+        this.index({document: document()})
     }
 
-    index(doc) {
+    index(event) {
         ejs.renderFile(dir('insert'), {}, (error, view) => {
-            doc.getElementById('root').innerHTML = view;
+            event.document.getElementById('root').innerHTML = view;
         })
-        this.routesReload(doc);
+        this.routesReload(event.document);
     }
 
-    cadastrar(doc){
-        if (elementsDOM.isEmptyInputValues(doc.forms.cadastrar)){
+    cadastrar(event){
+        if (elementsDOM.isEmptyInputValues(event.document.forms.cadastrar)){
             // valor vazio
             elementsDOM.msgError(
-                doc.getElementById('error'),
+                event.document.getElementById('error'),
                 'Preencha todos os campos!'
             )
         } else {
+            clientDAO.insertClient(
+                event.document.forms.cadastrar.name_client.value,
+                event.document.forms.cadastrar.fone_client.value,
+                event.document.forms.cadastrar.andress_client.value
+            )
             // valores ok
             elementsDOM.msgSucess(
-                doc.getElementById('error'),
+                event.document.getElementById('error'),
                 'Cliente salvo com sucesso!'
             )
+            this.index(event)
         }
-        this.index(doc)
     }
 
 }
