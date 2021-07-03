@@ -1,6 +1,6 @@
 
 const { ipcRenderer } = require('electron')
-const elementsDOM = require('../models/elementsDOM')()
+const elementsDOM = require('../library/elementsDOM')()
 
 require('dotenv').config()
 

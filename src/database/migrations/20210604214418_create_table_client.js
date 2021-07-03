@@ -5,8 +5,11 @@ exports.up = function(knex) {
     table.text('name').notNullable()
     table.text('fone').notNullable()
     table.text('andress').notNullable()
-    table.boolean('status').notNullable().defaultTo(1)
-        
+    table.text('number').notNullable()
+    table.text('code').notNullable()
+    table.text('city').notNullable()
+    table.text('province').notNullable()
+      
     table.timestamp('data').defaultTo(knex.fn.now())
   })
 };

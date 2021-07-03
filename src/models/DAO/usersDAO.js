@@ -1,6 +1,6 @@
 
 const { passwordHash } = require('../../library/emcryptHash')
-const data = require('../dateFormat')()
+const data = require('../../library/dateFormat')()
 
 const CRUD = require('./CRUD')
 

@@ -3,7 +3,7 @@ const ejs = require('ejs')
 const path = require('path')
 
 const usersDAO = require('../models/DAO/usersDAO')('users')
-const elementsDOM = require('../models/elementsDOM')()
+const elementsDOM = require('../library/elementsDOM')()
 
 dirViews = file =>
     path.join(__dirname, `../../public/windows/users/views/${file}`)

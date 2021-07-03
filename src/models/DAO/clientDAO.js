@@ -6,10 +6,8 @@ class ClientDAO extends CRUD {
         super(tableNane)
     }
 
-    async insertClient(name){
-        return this.insert({
-            name
-        })
+    async insertclientModel(clientModel){
+        return this.insert(clientModel)
     }
 }
 

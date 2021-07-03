@@ -17,7 +17,7 @@ module.exports = class Routes {
                         params: JSON.parse(
                             e.target.getAttribute('data-params')
                         ),
-                        document: this.getDocument(),
+                        document: document,
                         target: e.target,
                         event: e
                     })

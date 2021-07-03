@@ -3,8 +3,8 @@ const { ipcRenderer } = require('electron')
 
 const { checkPassword } = require('../library/emcryptHash');
 const users = require('../models/DAO/usersDAO')('users')
-const empty = require('../models/empty')()
-const str = require('../models/strings')()
+const empty = require('../library/empty')()
+const str = require('../library/strings')()
 
 require('dotenv').config()
 
