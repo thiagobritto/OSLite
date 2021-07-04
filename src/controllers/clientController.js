@@ -14,41 +14,41 @@ const Routes = require('../library/routes')
 class Client extends Routes {
     constructor(document) {
         super(document)
-        this.index({document: document()})
+        this.routesReload(
+            this.index({document: document()}).document
+        )
     }
 
     index(event) {
         ejs.renderFile(dir('insert'), {}, (error, view) => {
             event.document.getElementById('root').innerHTML = view;
         })
-        this.routesReload(event.document);
+        return event
     }
 
     manage(event) {
         ejs.renderFile(dir('manage'), {}, (error, view) => {
             event.document.getElementById('root').innerHTML = view;
         })
-        this.routesReload(event.document);
+        return event
     }
 
-    // events
     cadastrar(event){
-        console.log(event);
         if (elementsDOM.isEmptyInputValues(event.document.forms.cadastrar)){
             elementsDOM.msgError(
                 event.document.getElementById('error'),
                 'Preencha todos os campos!'
             )
         } else {
-            let client = clientModel(
-                event.document.forms.cadastrar.name_client.value,
-                event.document.forms.cadastrar.fone_client.value,
-                event.document.forms.cadastrar.andress_client.value,
-                event.document.forms.cadastrar.number_client.value,
-                event.document.forms.cadastrar.code_client.value,
-                event.document.forms.cadastrar.city_client.value,
-                event.document.forms.cadastrar.province_client.value
-            )
+            let client = clientModel()
+            client.setName(event.document.forms.cadastrar.name_client.value)
+            client.setFone(event.document.forms.cadastrar.fone_client.value)
+            client.setAndress(event.document.forms.cadastrar.andress_client.value)
+            client.setNumber(event.document.forms.cadastrar.number_client.value)
+            client.setCode(event.document.forms.cadastrar.code_client.value)
+            client.setCity(event.document.forms.cadastrar.city_client.value)
+            client.setProvince(event.document.forms.cadastrar.province_client.value)
+
             clientDAO.insertClientModel(client).then( id => {
                 elementsDOM.msgSucess(
                     event.document.getElementById('error'),
@@ -61,7 +61,6 @@ class Client extends Routes {
                     'Erro ao entar inserir cliente'
                 )
             })
-
         }
     }
 

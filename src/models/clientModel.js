@@ -1,18 +1,54 @@
 
-"use strict";
+class ClientModel{
 
-module.exports = function(name,fone,andress,number,code,city,province){
-    if (name&&fone&&andress&&number&&code&&city&&province){
-        return {
-            name : name,
-            fone : fone,
-            andress : andress,
-            number : number,
-            code : code,
-            city : city,
-            province : province
-        }
-    } else {
-        throw 'Error ao momtar clientModel'
+    setName (name){
+        this.name = name 
     }
+    getName (){
+        return this.name 
+    }
+    setFone(fone){
+        this.fone = fone
+    }
+    getFone(){
+        return this.fone
+    }
+
+    setAndress(andress){
+        this.andress = andress
+    }
+    getAndress(){
+        return this.andress
+    }
+
+    setNumber(number){
+        this.number = number
+    }
+    getNumber(){
+        return this.number
+    }
+
+    setCode(code){
+        this.code = code
+    }
+    getCode(){
+        return this.code
+    }
+
+    setCity(city){
+        this.city = city
+    }
+    getCity(){
+        return this.city
+    }
+
+    setProvince(province){
+        this.province = province
+    }
+    getProvince(){
+        return this.province
+    }
+
 }
+
+module.exports = () => new ClientModel()

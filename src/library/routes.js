@@ -24,12 +24,16 @@ module.exports = class Routes {
             if (href){
                 let params = this.getParams(href.split('/'))
                 if (this[href.split('/')[0]]){
-                    link.onclick = (e) => this[href.split('/')[0]]({
-                        params: params,
-                        document: document,
-                        target: e.target,
-                        e: e
-                    })
+                    link.onclick = (e) => {
+                        let event = {
+                            params: params,
+                            document: document,
+                            target: e.target,
+                            e: e
+                        }
+                        let callEvent = this[href.split('/')[0]](event)
+                        if (callEvent) this.routesReload(callEvent.document)
+                    }
                 }
             }
         })
