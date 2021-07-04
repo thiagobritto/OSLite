@@ -12,8 +12,8 @@ path.join(__dirname, `../../public/windows/client/views/${file}.ejs`)
 const Routes = require('../library/routes')
 
 class Client extends Routes {
-    constructor(document, routes) {
-        super(document, routes);
+    constructor(document) {
+        super(document)
         this.index({document: document()})
     }
 
@@ -24,7 +24,16 @@ class Client extends Routes {
         this.routesReload(event.document);
     }
 
+    manage(event) {
+        ejs.renderFile(dir('manage'), {}, (error, view) => {
+            event.document.getElementById('root').innerHTML = view;
+        })
+        this.routesReload(event.document);
+    }
+
+    // events
     cadastrar(event){
+        console.log(event);
         if (elementsDOM.isEmptyInputValues(event.document.forms.cadastrar)){
             elementsDOM.msgError(
                 event.document.getElementById('error'),
@@ -40,7 +49,7 @@ class Client extends Routes {
                 event.document.forms.cadastrar.city_client.value,
                 event.document.forms.cadastrar.province_client.value
             )
-            clientDAO.insertclientModel(client).then( id => {
+            clientDAO.insertClientModel(client).then( id => {
                 elementsDOM.msgSucess(
                     event.document.getElementById('error'),
                     'Cliente salvo com sucesso!'
@@ -58,4 +67,4 @@ class Client extends Routes {
 
 }
 
-module.exports = (document, routes) => new Client(document, routes)
+module.exports = (document) => new Client(document)
