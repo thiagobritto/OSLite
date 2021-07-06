@@ -1,0 +1,16 @@
+
+<% searchData.forEach( client => { %>
+
+    <tr onclick="selectRow(this, '<%=client.id%>')">
+        <td style="text-align: center;"><%=client.id%></td>
+        <td><%=client.name[0].toUpperCase() + client.name.substr(1)%></td>
+        <td><%=client.data%></td>
+        <td><%=client.fone%></td>
+        <td><%=client.andress[0].toUpperCase() + client.andress.substr(1)%></td>
+        <td><%=client.number%></td>
+        <td><%=client.code%></td>
+        <td><%=client.city[0].toUpperCase() + client.city.substr(1)%></td>
+        <td><%=client.province.toUpperCase()%></td>
+</tr>
+
+<% }) %>

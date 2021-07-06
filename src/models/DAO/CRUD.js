@@ -15,6 +15,10 @@ module.exports = class CRUD{
         return database.select(columns).table(this.tableNane);
     }
 
+    like(column, value){
+        return database(this.tableNane).where(column, 'like', `%${value}%`)
+    }
+
     insert(data) {
         return database.insert(data).into(this.tableNane);
     }

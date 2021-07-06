@@ -14,8 +14,33 @@ body{
     padding-top: 75px;
 }
 
-#manager table tr td, #manager table tr th{
+#table{
+    position: relative;
+    border:  1px solid #333;
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: auto;
+    box-sizing: initial !important;
+}
+
+tr td{
+    white-space: nowrap !important;
+    cursor: pointer;
+}
+
+th{
     text-align: center;
+}
+
+#table::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}
+#table::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+#table::-webkit-scrollbar-thumb {
+    background: #888;
 }
 
 #error {

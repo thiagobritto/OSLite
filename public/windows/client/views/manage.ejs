@@ -1,38 +1,47 @@
 <div class="row">
-    <table id="table">
-        <tr>
-            <th>Matrícula</th>
-            <th>Usuário</th>
-            <th>Administrativo</th>
-            <th>Ativo</th>
-            <th>Editar</th>
-        </tr>
-        <% data.forEach( user=> { %>
-            <tr>
-                <td>
-                    <%=user.id%>
-                </td>
-                <td class="userName">
-                    <%=user.userName[0].toUpperCase() + user.userName.substr(1)%>
-                </td>
-                <% if (user.super> 0) { %>
-                    <td><a href="#"><i data-super="0" data-id="<%=user.id%>"
-                                class="material-icons blue-text super">check</i></a></td>
-                    <% } else { %>
-                        <td><a href="#"><i data-super="1" data-id="<%=user.id%>"
-                                    class="material-icons blue-text super">check_box_outline_blank</i></a></td>
-                        <% } %>
-                            <% if (user.status> 0) { %>
-                                <td><a href="#"><i data-status="0" data-id="<%=user.id%>"
-                                            class="material-icons blue-text status">check</i></a></td>
-                                <% } else { %>
-                                    <td><a href="#"><i data-status="1" data-id="<%=user.id%>"
-                                                class="material-icons blue-text status">check_box_outline_blank</i></a>
-                                    </td>
-                                    <% } %>
-                                        <td><a href="#"><i class="material-icons blue-text edit"
-                                                    data-id="<%=user.id%>">edit</i></a></td>
-            </tr>
-            <% }); %>
-    </table>
+    <form name="search">
+        
+        <div class="input-field col s6">
+            <input name="search_client" id="id_name" type="text" class="validate" autofocus>
+            <label for="id_name">Buscar</label>
+        </div>
+
+        <div class="input-field col s6">
+            <i class="material-icons">search</i>
+        </div>
+
+    </form>
+</div>
+<div class="row">
+    <div id="table">
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Fone</th>
+                    <th>Rua</th>
+                    <th>Nº</th>
+                    <th>CEP</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="show_client">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s6">
+        <a href="#editar" id="editar" class="waves-effect waves-light btn grey darken-4">
+            editar
+        </a>
+        <a href="#excluir" id="excluir" class="waves-effect waves-light btn grey darken-4">
+            excluir
+        </a>
+    </div>
 </div>

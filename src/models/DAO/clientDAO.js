@@ -9,6 +9,10 @@ class ClientDAO extends CRUD {
     insertClientModel(clientModel){
         return this.insert(clientModel)
     }
+
+    searchClient(name){
+        return this.like('name', name)
+    }
 }
 
 module.exports = (tableNane) => new ClientDAO(tableNane)

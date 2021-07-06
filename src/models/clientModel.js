@@ -3,12 +3,15 @@ class ClientModel{
 
     setName (name){
         this.name = name 
+        return this
     }
     getName (){
         return this.name 
     }
+
     setFone(fone){
         this.fone = fone
+        return this
     }
     getFone(){
         return this.fone
@@ -16,6 +19,7 @@ class ClientModel{
 
     setAndress(andress){
         this.andress = andress
+        return this
     }
     getAndress(){
         return this.andress
@@ -23,6 +27,7 @@ class ClientModel{
 
     setNumber(number){
         this.number = number
+        return this
     }
     getNumber(){
         return this.number
@@ -30,6 +35,7 @@ class ClientModel{
 
     setCode(code){
         this.code = code
+        return this
     }
     getCode(){
         return this.code
@@ -37,6 +43,7 @@ class ClientModel{
 
     setCity(city){
         this.city = city
+        return this
     }
     getCity(){
         return this.city
@@ -44,6 +51,7 @@ class ClientModel{
 
     setProvince(province){
         this.province = province
+        return this
     }
     getProvince(){
         return this.province

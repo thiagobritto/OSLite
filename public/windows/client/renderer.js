@@ -1,14 +1,16 @@
 
-let btn_manage = document.getElementById('manage');
-let btn_insert = document.getElementById('insert')
 
-btn_manage.onclick = () => {
-    btn_manage.parentNode.classList.add('active')
-    btn_insert.parentNode.classList.remove('active')
+function selectRow(row, id){
+    let [...rows] = row.parentNode.querySelectorAll('tbody tr')
+    let editar = document.getElementById('editar')
+    let excluir = document.getElementById('excluir')
+
+    rows.forEach( element => {
+        element.style.background = '#fff'
+    })
+    row.style.background = 'cyan';
+    
+    editar.href = `#editar/id:${id}`
+    excluir.href = `#excluir/id:${id}`
+    
 }
-
-btn_insert.onclick = () => {
-    btn_insert.parentNode.classList.add('active')
-    btn_manage.parentNode.classList.remove('active')
-}
-
