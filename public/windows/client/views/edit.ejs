@@ -1,57 +1,47 @@
-
-<div class="row not-select">
-    <form class="col s12">
+<div class="row">
+    <form name="edition" class="col s12">
         <div class="row">
             <div class="input-field col s6">
-                <h6> <%=dataUser.userName[0].toUpperCase() + dataUser.userName.substr(1)%> </h6>
+                <input name="name_client" id="id_nome" type="text" class="validate" value="<%=client.name%>">
+                <label class="active" for="id_nome">Nome</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="fone_client" id="id_fone" type="text" class="validate" value="<%=client.fone%>">
+                <label class="active" for="id_fone">Telefone</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="id_hash" type="hidden" value="<%=dataUser.password.substr(0,16)%>">
-                <input id="id_pass" type="password" class="validate" maxlength="16" value="<%=dataUser.password.substr(0,16)%>">
-                <label class="active" for="id_pass">Nova Senha</label>
+                <input name="andress_client" id="id_andress" type="text" class="validate" value="<%=client.andress%>">
+                <label class="active" for="id_andress">Endereço</label>
+            </div>
+            <div class="input-field col s2">
+                <input name="number_client" id="id_number" type="text" class="validate" value="<%=client.number%>">
+                <label class="active" for="id_number">Nº</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6">
-                <input id="id_pass_conf" type="password" class="validate" maxlength="16" value="<%=dataUser.password.substr(0,16)%>">
-                <label class="active" for="id_pass_conf">Confirmar nova senha</label>
+            <div class="input-field col s4">
+                <input name="code_client" id="id_code" type="text" class="validate" value="<%=client.code%>">
+                <label class="active" for="id_code">CEP</label>
+            </div>
+            <div class="input-field col s4">
+                <input name="city_client" id="id_city" type="text" class="validate" value="<%=client.city%>">
+                <label class="active" for="id_city">Cidade</label>
+            </div>
+            <div class="input-field col s4">
+                <input name="province_client" id="id_province" type="text" class="validate" value="<%=client.province%>">
+                <label class="active" for="id_province">Estado</label>
             </div>
         </div>
+        
         <div class="row">
             <div class="input-field col s6">
-                <p>
-                    <label>
-                        <% if (dataUser.status > 0) { %>
-                            <input id="id_status" type="checkbox" checked="checked" />
-                        <% } else { %>
-                            <input id="id_status" type="checkbox" />
-                        <% } %>
-                        <span>Ativar as permições de usuário?</span>
-                    </label>
-                </p>
-            </div>
-            <div class="input-field col s6">
-                <p>
-                    <label>
-                        <% if (dataUser.super > 0) { %>
-                            <input id="id_super" type="checkbox" checked="checked" />
-                        <% } else { %>
-                            <input id="id_super" type="checkbox" />
-                        <% } %>
-                        <span>Usuário Adminitrador?</span>
-                    </label>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <button id="edit" class="waves-effect waves-light btn grey darken-4">
-                    Atualizar
-                </button>
-                <a href="#" id="voltar" class="waves-effect waves-light btn grey darken-4">
-                    Voltar
+                <a id="salvar" class="waves-effect waves-light btn grey darken-4" data-id="<%=client.id%>">
+                    salvar  
+                </a>
+                <a id="voltar" class="waves-effect waves-light btn grey darken-4">
+                    voltar
                 </a>
             </div>
         </div>

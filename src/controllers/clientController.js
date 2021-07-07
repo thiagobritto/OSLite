@@ -9,68 +9,119 @@ const elementsDOM = require('../library/elementsDOM')()
 dir = file =>
 path.join(__dirname, `../../public/windows/client/views/${file}.ejs`)
 
-const Routes = require('../library/routes')
-
-class Client extends Routes {
+class Client {
+    
     constructor(document) {
-        super(document)
-        this.routesReload(
-            this.index({document: document()}).document
-        )
+        this.document = document
+        this.index()
     }
 
-    index(event) {
+    // pages
+    index() {
+        let document = this.document()
         ejs.renderFile(dir('insert'), {}, (error, view) => {
-            event.document.getElementById('root').innerHTML = view;
+            document.getElementById('root').innerHTML = view;
         })
-        return event
+        document.getElementById('cadastrar').onclick = () => this.cadastrar()
     }
 
-    manage(event) {
+    manage() {
+        let document = this.document()
         ejs.renderFile(dir('manage'), {}, (error, view) => {
-            event.document.getElementById('root').innerHTML = view;
+            document.getElementById('root').innerHTML = view;
         })
-        
-        let search = event.document.forms.search.search_client
-        let showBox = event.document.getElementById('show_client')
-        
-        search.onkeyup = async () => {
-            let searchData = await clientDAO.searchClient(search.value)
+        let search = document.forms.search.search_client
+        let showBox = document.getElementById('show_client')
+        let methodSearch = async () => {
+            this.searchValue = search.value
+            let searchData = await clientDAO.searchClient(this.searchValue)
             ejs.renderFile(dir('monteRow'), {searchData}, (error, view) => {
                 showBox.innerHTML = view;
             })
         }
+        search.value = this.searchValue ? this.searchValue : ''
+        search.onkeyup = methodSearch
+        search.onfocus = methodSearch
+        search.focus()
+ 
+        document.getElementById('editar').onclick = (e) => {
+            if (e.target.getAttribute('data-id')){
+                this.editar(e.target.getAttribute('data-id'))
+            }
+        }
 
-        return event
     }
 
-    cadastrar(event){
-        if (elementsDOM.isEmptyInputValues(event.document.forms.cadastrar)){
+    // events
+    cadastrar(){
+        let document = this.document()
+        if (elementsDOM.isEmptyInputValues(document.forms.cadastrar)){
             elementsDOM.msgError(
-                event.document.getElementById('error'),
+                document.getElementById('error'),
                 'Preencha todos os campos!'
             )
         } else {
             let client = clientModel()
-            .setName(event.document.forms.cadastrar.name_client.value)
-            .setFone(event.document.forms.cadastrar.fone_client.value)
-            .setAndress(event.document.forms.cadastrar.andress_client.value)
-            .setNumber(event.document.forms.cadastrar.number_client.value)
-            .setCode(event.document.forms.cadastrar.code_client.value)
-            .setCity(event.document.forms.cadastrar.city_client.value)
-            .setProvince(event.document.forms.cadastrar.province_client.value)
+            .setName(document.forms.cadastrar.name_client.value)
+            .setFone(document.forms.cadastrar.fone_client.value)
+            .setAndress(document.forms.cadastrar.andress_client.value)
+            .setNumber(document.forms.cadastrar.number_client.value)
+            .setCode(document.forms.cadastrar.code_client.value)
+            .setCity(document.forms.cadastrar.city_client.value)
+            .setProvince(document.forms.cadastrar.province_client.value)
             clientDAO.insertClientModel(client).then( id => {
                 elementsDOM.msgSucess(
-                    event.document.getElementById('error'),
+                    document.getElementById('error'),
                     'Cliente salvo com sucesso!'
                 )
-                this.index(event)
+                this.index()
             }).catch( err => {
                 elementsDOM.msgError(
-                    event.document.getElementById('error'),
+                    document.getElementById('error'),
                     'Erro ao entar inserir cliente'
                 )
             })
+        }
+    }
+
+    async editar(id){
+        let document = this.document()
+        let client = await clientDAO.getClient(id)
+
+        ejs.renderFile(dir('edit'), {client}, (error, view) => {
+            document.getElementById('root').innerHTML = view;
+        })
+
+        document.getElementById('voltar').onclick = (e) => this.manage()
+        document.getElementById('salvar').onclick = (e) => {
+            //console.log(e.target.getAttribute('data-id'));
+            if (elementsDOM.isEmptyInputValues(document.forms.edition)){
+                elementsDOM.msgError(
+                    document.getElementById('error'),
+                    'Preencha todos os campos!'
+                )
+            } else {
+                let client = clientModel()
+                .setName(document.forms.edition.name_client.value)
+                .setFone(document.forms.edition.fone_client.value)
+                .setAndress(document.forms.edition.andress_client.value)
+                .setNumber(document.forms.edition.number_client.value)
+                .setCode(document.forms.edition.code_client.value)
+                .setCity(document.forms.edition.city_client.value)
+                .setProvince(document.forms.edition.province_client.value)
+                clientDAO.updateClientModel(id, client).then( id => {
+                    elementsDOM.msgSucess(
+                        document.getElementById('error'),
+                        'Dados atualizados com sucesso!'
+                    )
+                    this.manage()
+                }).catch( err => {
+                    elementsDOM.msgError(
+                        document.getElementById('error'),
+                        'Erro ao tentar atualizar dados do cliente'
+                    )
+                })
+            }
         }
     }
 

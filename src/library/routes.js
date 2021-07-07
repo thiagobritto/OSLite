@@ -21,10 +21,12 @@ module.exports = class Routes {
         document = document ? document : this.getDocument();
         [...document.links].forEach( link => {
             let href = link.href.split('#')[1]
+            console.log(href);
             if (href){
                 let params = this.getParams(href.split('/'))
                 if (this[href.split('/')[0]]){
                     link.onclick = (e) => {
+                        e.preventDefault()
                         let event = {
                             params: params,
                             document: document,

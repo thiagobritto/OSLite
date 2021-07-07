@@ -14,13 +14,16 @@ body{
     padding-top: 75px;
 }
 
-#table{
-    position: relative;
+#table {
     border:  1px solid #333;
     height: 250px;
     overflow-y: auto;
     overflow-x: auto;
-    box-sizing: initial !important;
+}
+
+#clients{
+    border:  1px solid #333;
+    background-color: red;
 }
 
 tr td{
