@@ -22,6 +22,10 @@ class ClientDAO extends CRUD {
     updateClientModel(id, clientModel) {
         return this.update({ id }, clientModel)
     }
+
+    deleteClient(id){
+        return this.delete({id})
+    }
 }
 
 module.exports = (tableNane) => new ClientDAO(tableNane)

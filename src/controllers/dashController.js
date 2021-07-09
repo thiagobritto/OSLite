@@ -47,6 +47,11 @@ class DashController {
     openClientPanel(){
         this.openWindowParent('client', 'dash')
     }
+
+    openCarroPanel(){
+        this.openWindowParent('carro', 'dash')
+    }
+
 }
 
 module.exports = () => new DashController()

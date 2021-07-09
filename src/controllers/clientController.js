@@ -49,7 +49,11 @@ class Client {
                 this.editar(e.target.getAttribute('data-id'))
             }
         }
-
+        document.getElementById('excluirConfirm').onclick = (e) => {
+            if (e.target.getAttribute('data-id')){
+                this.excluir(e.target.getAttribute('data-id'))
+            }
+        }
     }
 
     // events
@@ -123,6 +127,21 @@ class Client {
                 })
             }
         }
+    }
+
+    excluir(id){
+        clientDAO.deleteClient(id).then( res => {
+            elementsDOM.msgSucess(
+                document.getElementById('error'),
+                'cliente excluido com sucesso!'
+            )
+            this.manage()
+        }).catch( err => {
+            elementsDOM.msgError(
+                document.getElementById('error'),
+                'Erro ao tentar excluir cliente'
+            )
+        })
     }
 
 }

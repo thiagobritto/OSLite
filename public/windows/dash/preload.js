@@ -14,6 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
     dash.setNameAppIn(document.getElementsByClassName('appName'))
 
     document.getElementById('cad_client').onclick = e => dash.openClientPanel(e)
+    document.getElementById('cad_carro').onclick = e => dash.openCarroPanel(e)
     document.getElementById('logout').onclick = e => dash.logout(e)
 })
 

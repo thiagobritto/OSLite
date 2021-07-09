@@ -1,14 +1,15 @@
 <div class="row">
-    <form name="search">
-        
-        <div class="input-field col s6">
-            <input name="search_client" id="id_name" type="text" class="validate" autofocus>
-            <label for="id_name">Buscar</label>
-        </div>
+    <form name="client">
 
         <div class="input-field col s6">
-            <i class="material-icons">search</i>
+            <input name="client_carro" id="id_name" type="text" class="validate" autofocus>
+            <label class="active" for="id_name">Buscar</label>
+            <ul id="show_client">
+
+            </ul>
         </div>
+
+
 
     </form>
 </div>
@@ -28,7 +29,7 @@
                     <th>Estado</th>
                 </tr>
             </thead>
-            <tbody id="show_client">
+            <tbody>
 
             </tbody>
         </table>
@@ -37,11 +38,11 @@
 
 <div class="row">
     <div class="input-field col s6">
-        <a id="editar" class="waves-effect waves-light btn grey darken-4">
-            editar
+        <a id="adicionar" class="waves-effect waves-light btn grey darken-4">
+            adicionar
         </a>
-        <a id="excluir" onclick="modal(this)" data-target="excluirModal" class="waves-effect waves-light btn grey darken-4 modal-trigger">
-            excluir
+        <a id="remover" class="waves-effect waves-light btn grey darken-4">
+            remover
         </a>
     </div>
 </div>
@@ -49,11 +50,11 @@
 <!-- Modal Structure -->
 <div id="excluirModal" class="modal">
     <div class="modal-content">
-      <h4 id="titleModal"></h4>
-      <p>Deseja realmente excluir o cliente?</p>
+        <h4 id="titleModal"></h4>
+        <p>Deseja realmente excluir o cliente?</p>
     </div>
     <div class="modal-footer">
-      <a id="excluirConfirm" class="modal-close waves-effect waves-green btn-flat">sim</a>
-      <a class="modal-close waves-effect waves-green btn-flat">não</a>
+        <a id="excluirConfirm" class="modal-close waves-effect waves-green btn-flat">sim</a>
+        <a class="modal-close waves-effect waves-green btn-flat">não</a>
     </div>
-  </div>
+</div>

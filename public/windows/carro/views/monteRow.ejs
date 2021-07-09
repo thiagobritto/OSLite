@@ -1,0 +1,8 @@
+
+<% searchData.forEach( client => { %>
+
+    <li onclick="setBtn(this, '<%=client.id%>')" data-id="<%=client.id%>">
+        <%=client.name[0].toUpperCase() + client.name.substr(1)%>    
+    </li>
+
+<% }) %>

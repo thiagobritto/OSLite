@@ -31,7 +31,7 @@ class ElementsDOM {
     }
 
     setClickInCollection(elements, callback) {
-        [...elements].forEach(element => element.onclick = callback);
+        [...elements].forEach(element => element.onclick = (e) => callback(e));
     }
 
     getAttributeData(element, nameAttrData) {
